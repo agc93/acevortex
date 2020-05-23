@@ -1,0 +1,47 @@
+{
+  "name": "game-acecombat7skiesunknown",
+  "version": "0.0.1",
+  "description": "Adds support for Ace Combat 7: Skies Unknown mods in Vortex",
+  "main": "./dist/index.js",
+  "scripts": {
+    "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --display-error-details --progress --profile --color",
+    "bundle7z": "7z a -t7z game-acecombat7skiesunknown.7z .\\dist\\index.js .\\dist\\info.json .\\gameart.png",
+    "build": "npm run webpack && extractInfo"
+  },
+  "config": {
+    "game": "Ace Combat 7: Skies Unknown"
+  },
+  "author": "agc93",
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/agc93/acevortex.git"
+  },
+  "devDependencies": {
+    "7z-bin": "Nexus-Mods/7z-bin",
+    "@types/i18next": "^12.1.0",
+    "@types/node": "^12.0.10",
+    "@types/react": "^16.8.22",
+    "@types/react-bootstrap": "^1.0.0",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "axios": "^0.19.2",
+    "bluebird": "^3.5.5",
+    "electron": "4.2.4",
+    "i18next": "^17.0.4",
+    "react": "^16.8.6",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.13.1",
+    "ts-loader": "^6.0.4",
+    "typedoc": "^0.17.4",
+    "typescript": "^3.5.2",
+    "vortex-api": "github:Nexus-Mods/vortex-api",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.4"
+  }
+}
