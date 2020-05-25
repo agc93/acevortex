@@ -2,13 +2,14 @@ import path = require('path');
 import { fs, log, util, selectors } from "vortex-api";
 import { IExtensionContext, IDiscoveryResult, IState, ISupportedResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry } from 'vortex-api/lib/types/api';
 import { InstructionType, IInstruction } from 'vortex-api/lib/extensions/mod_management/types/IInstallResult';
-import { ISteamEntry } from 'vortex-api/lib/util/api';
+import { UnrealGameHelper, ProfileClient } from "vortex-ext-common";
 
-import { ProfileClient } from "./profileClient";
+// import { ProfileClient } from "./profileClient";
 
 export const GAME_ID = 'acecombat7skiesunknown'
 export const STEAMAPP_ID = 502500;
 const MOD_FILE_EXT = ".pak";
+const unreal: UnrealGameHelper = new UnrealGameHelper(GAME_ID);
 
 export const PROFILE_SETTINGS = {
     AllowUnknown: 'bs_allow_unknown'
@@ -25,6 +26,8 @@ export function findGame() {
 
 //This is the main function Vortex will run when detecting the game extension. 
 function main(context : IExtensionContext) {
+    // unreal = new UnrealGameHelper(GAME_ID);
+    unreal.enableFallback = () => new ProfileClient(context.api.store).getProfileSetting(PROFILE_SETTINGS.AllowUnknown, false);
     context.once(() => {
     });
     context.registerGame({
@@ -41,7 +44,8 @@ function main(context : IExtensionContext) {
         queryModPath: () => relModPath,
         setup: (discovery: IDiscoveryResult) => {
             log('debug', 'running acevortex setup')
-            prepareForModding(discovery);
+            unreal.prepareforModding(discovery, relModPath)
+            // prepareForModding(discovery);
         },
         environment: {
             SteamAPPId: STEAMAPP_ID.toString(),
@@ -55,8 +59,8 @@ function main(context : IExtensionContext) {
     context.registerInstaller(
         'ac7-pakmods', 
         25, 
-        testSupportedContent, 
-        (files, destinationPath, gameId, progress) => installContent(context.api, files, destinationPath, gameId)
+        unreal.testSupportedContent, 
+        unreal.installContent
     );
 
     addProfileFeatures(context);
@@ -134,7 +138,7 @@ async function installContent(api: IExtensionApi, files: string[], destinationPa
         return Promise.resolve({ instructions });
     } else {
         log('warn', "Couldn't find reliable root indicator in file list. Falling back to basic installation!");
-        var allowInstall = new ProfileClient(api).getProfileSetting(PROFILE_SETTINGS.AllowUnknown, false);
+        var allowInstall = new ProfileClient(api.store).getProfileSetting(PROFILE_SETTINGS.AllowUnknown, false);
         if (allowInstall) {
             log('warn', 'Allowing installation of unrecognised mod because of allow_unknown');
             var instructions = files.map((file: string): IInstruction => {
