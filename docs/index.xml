@@ -1,0 +1,99 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Documentation</title><link>/docs/</link><description>Recent content in Documentation on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/docs/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Frequently Asked Questions</title><link>/docs/introduction/faq/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/introduction/faq/</guid><description>
+&lt;p>Below is a collection of frequent questions and the best answers I can give.&lt;/p>
+&lt;h3 id="why-do-i-need-vortex-for-this">Why do I need Vortex for this?&lt;/h3>
+&lt;p>You don&amp;rsquo;t! If you prefer installing and managing your mods manually, or using any other modding tools, I recommend using them! AceVortex is just an alternate method of installing mods for those who are more familiar with Vortex already. In particular, installing AC7 mods manually is not particularly arduous if you are used to it.&lt;/p>
+&lt;h3 id="im-a-modpack-author-how-do-i-make-mods-compatible-with-vortex">I’m a mod/pack author, how do I make mods compatible with Vortex?&lt;/h3>
+&lt;blockquote>
+&lt;p>This is a complicated answer, and we have more details in &lt;a href="../docs/developer/authoring">the developer docs&lt;/a> to explain the reasoning and how to work with Vortex.&lt;/p>
+&lt;/blockquote>
+&lt;p>The over-simplified answer is that Vortex works best when a single mod archive (i.e. a file on Nexus Mods) contains just one &lt;code>.pak&lt;/code> mod file in it. This is usually impractical for AC7 (especially with skin mods), so the installer will try to detect and adapt to different mod structures to make installing mods easier, even when they&amp;rsquo;re not packaged how Vortex likes them.&lt;/p>
+&lt;p>In particular, note that the installer will only deploy &lt;code>.pak&lt;/code> files (and sometimes any other files in the folder containing those &lt;code>.pak&lt;/code> files), so anything in other folders shouldn&amp;rsquo;t impact compatibility.&lt;/p>
+&lt;h3 id="what-about-mods-that-arent-on-the-nexus">What about mods that aren&amp;rsquo;t on the Nexus?&lt;/h3>
+&lt;p>They should still work fine! Download the archive file and install it using Vortex&amp;rsquo;s standard &amp;ldquo;Install from File&amp;rdquo; button. You might be prompted to choose what files you want installed, and also remember that non-Nexus mods won&amp;rsquo;t have quite the same metadata available in Vortex you might be used to.&lt;/p>
+&lt;h3 id="the-installer-prompt-failed-and-now-i-cant-install-my-mod">The installer prompt failed and now I can&amp;rsquo;t install my mod?!&lt;/h3>
+&lt;p>If you are facing problems installing mods with multiple &lt;code>.pak&lt;/code> files, you may have found a problem in the advanced installer that AceVortex uses to cut down on conflicts. First, head to your Settings page in Vortex and turn off the &lt;em>Enable Interactive Installer&lt;/em> toggle under the &lt;strong>Enable Advanced Installer for AC7&lt;/strong> section and try to install your mod again.&lt;/p>
+&lt;p>If that works, &lt;strong>please&lt;/strong> raise an issue &lt;a href="https://github.comm/agc93/acevortex">on GitHub&lt;/a> and make sure to link/include which mod you&amp;rsquo;re trying to install. We&amp;rsquo;re always trying to improve mod compatibility and you might have just found a bug!&lt;/p></description></item><item><title>Docs: Installation</title><link>/docs/usage/installation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/usage/installation/</guid><description>
+&lt;h2 id="quick-start">Quick Start&lt;/h2>
+&lt;p>The fastest way to get started is to just open the Games page in Vortex and scroll down through the unmanaged games. You should see an entry for Ace Combat 7 Skies Unknown in there. Click Manage on that entry and follow the prompts to install the extension and restart Vortex. You should be good to go and try &lt;a href="../docs/usage/mods">installing some mods&lt;/a>!&lt;/p>
+&lt;p>&lt;img src="../ac7_install.gif" alt="installation process">&lt;/p>
+&lt;h2 id="installing-the-extension">Installing the Extension&lt;/h2>
+&lt;p>If the quick start doesn&amp;rsquo;t work or you want to install the extension yourself, there&amp;rsquo;s a couple of different ways to do that! Unless you&amp;rsquo;ve got a pretty specific use case, you&amp;rsquo;ll probably want one of the two automatic methods, but manual installation is available as well.&lt;/p>
+&lt;h3 id="automatic-installation">Automatic Installation&lt;/h3>
+&lt;blockquote>
+&lt;p>This is the easiest way to install!&lt;/p>
+&lt;/blockquote>
+&lt;ol>
+&lt;li>Open up Vortex, and open the Extensions panel from the left sidebar.&lt;/li>
+&lt;li>Click &lt;strong>Find more&lt;/strong> to open the list of Extensions&lt;/li>
+&lt;li>Find &lt;strong>Ace Combat 7 Skies Unknown Support&lt;/strong> and click &lt;em>Install&lt;/em>&lt;/li>
+&lt;li>Wait for the extension to install and &lt;strong>restart Vortex&lt;/strong> when prompted.&lt;/li>
+&lt;/ol>
+&lt;p>Once Vortex has restarted, just click the Manage button on Ace Combat 7 in your Games screen and you&amp;rsquo;re ready to &lt;a href="../docs/usage/mods">install some mods&lt;/a>!&lt;/p>
+&lt;h3 id="semi-automatic-installation">Semi-Automatic Installation&lt;/h3>
+&lt;p>If you can&amp;rsquo;t install directly from the Extensions screen, you can instead install from the archive.&lt;/p>
+&lt;ol>
+&lt;li>Download the archive from &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">Nexus Mods&lt;/a> or &lt;a href="https://https://github.com/agc93/acevortex/releases">GitHub&lt;/a>&lt;/li>
+&lt;li>Open the Extensions panel in Vortex&lt;/li>
+&lt;li>Click on the &lt;em>Drop File(s)&lt;/em> box in the corner and locate the archive you downloaded.&lt;/li>
+&lt;li>Wait for the extension to install and &lt;strong>restart Vortex&lt;/strong> when prompted.&lt;/li>
+&lt;/ol>
+&lt;p>Once Vortex has restarted, just click the Manage button on Ace Combat in your Games screen and you&amp;rsquo;re ready to &lt;a href="../docs/usage/mods">install some mods&lt;/a>!&lt;/p>
+&lt;h3 id="manual-installation">Manual Installation&lt;/h3>
+&lt;blockquote>
+&lt;p>Only attempt this if you &lt;em>absolutely&lt;/em> have to. It becomes much harder to debug and much harder to upgrade.&lt;/p>
+&lt;/blockquote>
+&lt;p>If you want to install the extension yourself, you will have to install the actual extension files manually. Make sure you close Vortex before proceeding.&lt;/p>
+&lt;p>First, download the archive from &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">Nexus Mods&lt;/a> or &lt;a href="https://https://github.com/agc93/acevortex/actions">GitHub&lt;/a>.&lt;/p>
+&lt;p>Next, unpack the archive to somewhere convenient. You should have a directory named &lt;code>game-acecombat7skiesunknown&lt;/code> with at least three files inside:&lt;/p>
+&lt;ul>
+&lt;li>info.json&lt;/li>
+&lt;li>index.js&lt;/li>
+&lt;li>gameart.png&lt;/li>
+&lt;/ul>
+&lt;p>Now, copy the whole directory to your Vortex folder. You can easily open your Vortex folder by opening a new File Explorer window and entering the following in to the location bar: &lt;code>%APPDATA%/Vortex&lt;/code> and then opening the &lt;code>plugins&lt;/code> directory (create it if it doesn’t exist).&lt;/p>
+&lt;p>Once you’re done, you should have three files at the following locations:&lt;/p>
+&lt;div class="highlight">&lt;pre style="background-color:#f8f8f8;-moz-tab-size:4;-o-tab-size:4;tab-size:4">&lt;code class="language-text" data-lang="text">C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game-acecombat7skiesunknown\info.json
+C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game-acecombat7skiesunknown\index.js
+C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game-acecombat7skiesunknown\gameart.png
+&lt;/code>&lt;/pre>&lt;/div>&lt;p>With those files in place, you&amp;rsquo;re clear to start Vortex and you should see the C&amp;amp;C Remastered icon in the Games screen light up.&lt;/p></description></item><item><title>Docs: Installing Mods</title><link>/docs/usage/mods/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/usage/mods/</guid><description>
+&lt;p>At it&amp;rsquo;s core, installing mods is roughly the same as any Vortex-enabled game, once you&amp;rsquo;ve added C&amp;amp;C Remastered as a managed game in Vortex.&lt;/p>
+&lt;p>If you haven&amp;rsquo;t already, open the Games screen and click the &lt;strong>Manage&lt;/strong> button on the C&amp;amp;C Remastered icon under &lt;em>Unmanaged&lt;/em>&lt;/p>
+&lt;hr>
+&lt;h2 id="installing-from-nexus-mods">Installing from Nexus Mods&lt;/h2>
+&lt;p>If you&amp;rsquo;re installing mods from Nexus Mods, you can use the &amp;ldquo;Vortex&amp;rdquo; or &amp;ldquo;Download with Mod Manager&amp;rdquo; buttons on the mod page to automatically open Vortex and download the mod. Simply Install and Enable like usual and you should be good to go.&lt;/p>
+&lt;h3 id="installing-archives-with-multiple-mod-files">Installing archives with multiple mod files&lt;/h3>
+&lt;p>If you install a file from Nexus Mods that has multiple game mod files (i.e. &lt;code>.pak&lt;/code> files), you will see a prompt that should walk you through the process of choosing which mod files you want to install. Remember that since Vortex doesn&amp;rsquo;t actually read your game files, it won&amp;rsquo;t be able to detect skin slot conflicts automatically.&lt;/p>
+&lt;h2 id="install-from-archives">Install from archives&lt;/h2>
+&lt;p>You can also download mod archives directly from Nexus Mods or anywhere else you like and install them with Vortex. Simply use the &lt;em>Install From File&lt;/em> button in the toolbar or drop them onto the drop zone at the bottom of the Vortex window.&lt;/p>
+&lt;blockquote>
+&lt;p>Be aware that installing from non-Nexus archives will often not include the full metadata. You can double-click the mod in the mod list to change its details.&lt;/p>
+&lt;/blockquote></description></item><item><title>Docs: Configuration</title><link>/docs/usage/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/usage/configuration/</guid><description>
+&lt;h3 id="customising-metadata">Customising metadata&lt;/h3>
+&lt;p>You can customise the basic metadata of any of your mods (name, author, notes etc) using Vortex&amp;rsquo;s built-in sidebar. Just double-click on the name of any mod in your mod list and you&amp;rsquo;ll get a small dialog where you can change the name and author, or add some notes for yourself. It&amp;rsquo;s not recommended to change the source or mod type as these control how mods are handled internally.&lt;/p>
+&lt;h3 id="profiles">Profiles&lt;/h3>
+&lt;p>Just like any other Vortex game, you can have multiple profiles configured for different mod selections. Want an easier way to switch between certain sets of skins? Don&amp;rsquo;t want to use all your wild skins every time you play? Set up profiles and you can easily switch between them to keep your mod installs separate. You can create a new profile from the Profiles screen by either cloning your exising one (from the Edit dropdown menu), or clicking &lt;em>Add &amp;ldquo;Ace Combat 7: Skies Unknown&amp;rdquo; Profile&lt;/em>.&lt;/p>
+&lt;h3 id="purging-to-default">Purging to default&lt;/h3>
+&lt;p>If you want to take your game back to a default, unmodded state, you can use Vortex&amp;rsquo;s &lt;em>Purge&lt;/em> feature. Click the Purge Mods button from the Mods list and Vortex will undeploy all your enabled mods, leaving your game directory essentially unmodded.&lt;/p>
+&lt;h3 id="removing-or-resetting-acevortex">Removing or resetting AceVortex&lt;/h3>
+&lt;p>If you want to completely reset AceVortex so that you can start over from scratch, first uninstall all your currently installed mods from the Mods list. Once you&amp;rsquo;ve done that (and deployed!) jump to the Profiles screen, and choose &lt;em>Remove&lt;/em> from the dropdown menu beside the edit button for the &amp;ldquo;&lt;strong>Ace Combat 7: Skies Unknown - Default&lt;/strong>&amp;rdquo; profile. This will effectively reset your Vortex so that AC7 will reappear as an available, unmanaged game in the Games list.&lt;/p>
+&lt;p>To remove AceVortex entirely, you should uninstall and remove all your installed mods from the Mods list first. After deploying, you can then remove the Default profile (see above), and finally uninstall the extension itself by clicking over to the Extensions screen. AceVortex will appear near the end of the list as &amp;ldquo;&lt;strong>Game: Ace Combat 7: Skies Unknown&lt;/strong>&amp;rdquo;. Click Remove to uninstall AceVortex.&lt;/p>
+&lt;blockquote>
+&lt;p>Note that AC7 will still show up in your Games list since Vortex can redownload the extension from Nexus Mods.&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="multiple-installation-variants">Multiple Installation Variants&lt;/h3>
+&lt;p>If you don&amp;rsquo;t like the specific skin/slot choices you made when you installed one of your mods, remember that you can always reinstall the mod and use Vortex&amp;rsquo;s &lt;em>variant&lt;/em> functionality to easily switch between multiple versions of the same mod without affecting the rest of your mod list.&lt;/p></description></item><item><title>Docs: Packaging for Mod Authors</title><link>/docs/developer/authoring/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/developer/authoring/</guid><description>
+&lt;p>First off, I want to cover off one unfortunate reality of modding AC7 with Vortex: the way Vortex expects mods to work and the way AC7 handles mods don&amp;rsquo;t match up quite right.&lt;/p>
+&lt;p>In particular, Vortex (usually) expects each mod archive to have only one &lt;code>.pak&lt;/code> mod file and for different variants of a mod to be distributed as separate files on Nexus Mods. This isn&amp;rsquo;t always practical though with mods often having multiple skins for multiple aircraft and then potentially multiplying that over multiple skin slots can make that untenable.&lt;/p>
+&lt;p>AceVortex tries to find a middle ground as much as possible.&lt;/p>
+&lt;hr>
+&lt;p>In an ideal world, each mod archive would only have one &lt;code>.pak&lt;/code> file in it. This doesn&amp;rsquo;t just make installation easier, this also gives us the potential for some extra features in future, like controlling load order or improving metadata.&lt;/p>
+&lt;p>When a user installs a mod that has multiple &lt;code>.pak&lt;/code> files, it runs a few checks and will start a guided process to install only the files it needs. The over-simplified version of the installation is this:&lt;/p>
+&lt;ol>
+&lt;li>If a mod only contains one &lt;code>.pak&lt;/code> file, just install that by default&lt;/li>
+&lt;li>If there are multiple paths in the mod that contain one or more &lt;code>.pak&lt;/code> files, it will ask the user whether to install only some or all&lt;/li>
+&lt;li>If any of the chosen paths contain more than one &lt;code>.pak&lt;/code> file, it will also ask which specific &lt;code>.pak&lt;/code> files to install, defaulting to all.&lt;/li>
+&lt;/ol>
+&lt;p>This should minimise the amount of friction for installing mods while also reducing the odds of a user installing conflicting skins/slots/etc.&lt;/p>
+&lt;blockquote>
+&lt;p>We also added a toggle in the Settings page to turn this behaviour off and just use the default behaviour, which is to install all the files found in the first path to contain a &lt;code>.pak&lt;/code> file.&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

@@ -1,0 +1,16 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Developer Guide</title><link>/docs/developer/</link><description>Recent content in Developer Guide on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/docs/developer/index.xml" rel="self" type="application/rss+xml"/><item><title>Docs: Packaging for Mod Authors</title><link>/docs/developer/authoring/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/developer/authoring/</guid><description>
+&lt;p>First off, I want to cover off one unfortunate reality of modding AC7 with Vortex: the way Vortex expects mods to work and the way AC7 handles mods don&amp;rsquo;t match up quite right.&lt;/p>
+&lt;p>In particular, Vortex (usually) expects each mod archive to have only one &lt;code>.pak&lt;/code> mod file and for different variants of a mod to be distributed as separate files on Nexus Mods. This isn&amp;rsquo;t always practical though with mods often having multiple skins for multiple aircraft and then potentially multiplying that over multiple skin slots can make that untenable.&lt;/p>
+&lt;p>AceVortex tries to find a middle ground as much as possible.&lt;/p>
+&lt;hr>
+&lt;p>In an ideal world, each mod archive would only have one &lt;code>.pak&lt;/code> file in it. This doesn&amp;rsquo;t just make installation easier, this also gives us the potential for some extra features in future, like controlling load order or improving metadata.&lt;/p>
+&lt;p>When a user installs a mod that has multiple &lt;code>.pak&lt;/code> files, it runs a few checks and will start a guided process to install only the files it needs. The over-simplified version of the installation is this:&lt;/p>
+&lt;ol>
+&lt;li>If a mod only contains one &lt;code>.pak&lt;/code> file, just install that by default&lt;/li>
+&lt;li>If there are multiple paths in the mod that contain one or more &lt;code>.pak&lt;/code> files, it will ask the user whether to install only some or all&lt;/li>
+&lt;li>If any of the chosen paths contain more than one &lt;code>.pak&lt;/code> file, it will also ask which specific &lt;code>.pak&lt;/code> files to install, defaulting to all.&lt;/li>
+&lt;/ol>
+&lt;p>This should minimise the amount of friction for installing mods while also reducing the odds of a user installing conflicting skins/slots/etc.&lt;/p>
+&lt;blockquote>
+&lt;p>We also added a toggle in the Settings page to turn this behaviour off and just use the default behaviour, which is to install all the files found in the first path to contain a &lt;code>.pak&lt;/code> file.&lt;/p>
+&lt;/blockquote></description></item></channel></rss>

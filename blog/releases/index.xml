@@ -1,0 +1,11 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Releases</title><link>/blog/releases/</link><description>Recent content in Releases on AceVortex</description><generator>Hugo -- gohugo.io</generator><lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate><atom:link href="/blog/releases/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 0.2 Release</title><link>/blog/2020/05/25/alpha-0.2-release/</link><pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate><guid>/blog/2020/05/25/alpha-0.2-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is a minor update to &lt;a href="../../updates/v0.0.1">the first alpha&lt;/a> of the AceVortex extension! We just had to clear up a minor error in how we register the installer with Vortex to avoid compatibility problems.&lt;/p>
+&lt;p>You should be able to install mods for AC7 from Nexus Mods or external archives in this release and support the basic Vortex features of install/enable/disable/deploy/purge.&lt;/p></description></item><item><title>Blog: Initial Release</title><link>/blog/2020/05/23/initial-release/</link><pubDate>Sat, 23 May 2020 00:00:00 +0000</pubDate><guid>/blog/2020/05/23/initial-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is the first alpha of the AC7: Skies Unknown extension!&lt;/p>
+&lt;p>You should be able to install mods for AC7 from Nexus Mods or external archives in this release and support the basic Vortex features of install/enable/disable/deploy/purge.&lt;/p></description></item></channel></rss>
