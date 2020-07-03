@@ -114,7 +114,7 @@ async function installContent(api: IExtensionApi, files: string[], destinationPa
             'question',
             'Multiple mod files detected',
             {
-                text: `The mod package you are installing appears to contain multiple nested mod packages! We found ${keys.length} mod locations in the archive.\n\nYou can either cancel now and verify the mod is packaged correctly, or attempt to install all of them together. This will probably cause conflicts!\n\nAlternatively, you can select only the paths you want to install from below and choose Install Selected to install all paks from only those folders.`,
+                text: `The mod package you are installing appears to contain multiple nested mod packages! We found ${keys.length} mod locations in the archive.\n\nYou can either cancel now and verify the mod is packaged correctly, or attempt to install all of them together. This will probably cause conflicts!\n\nAlternatively, you can select only the paths you want to install from below and choose Install Selected to install paks from only those folders.`,
                 checkboxes: keys.map(k => {
                     return {
                         id: k,
@@ -154,7 +154,7 @@ async function installMultipleModArchive(api: IExtensionApi, selections: string[
             'question',
             'Multiple mod files detected',
             {
-                text: `The package paths you have selected also contain multiple mod files!\n\nYou can individually disable any mod files below to skip installing them or choose Install to continue with all the selected files.`,
+                text: `The mod package or paths you are installing contain multiple mod files!\n\nYou can individually disable any mod files below to skip installing them or choose Install Selected to continue with all the selected files.`,
                 checkboxes: selectedRoots.flatMap(sr => sr).map(k => {
                     return {
                         id: k,

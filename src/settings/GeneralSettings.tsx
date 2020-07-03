@@ -50,7 +50,6 @@ class GeneralSettings extends ComponentEx<IProps, {}> {
 
 
 function mapStateToProps(state: IState): IConnectedProps {
-    // log('debug', 'mapping beatvortex state to props');
     return {
         enableAdvanced: util.getSafe(state.settings, ['acevortex', 'installer'], true)
     };

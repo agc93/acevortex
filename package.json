@@ -5,8 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --display-error-details --progress --profile --color",
-    "bundle7z": "7z a -t7z game-acecombat7skiesunknown.7z .\\dist\\index.js .\\dist\\info.json .\\gameart.png",
-    "build": "npm run webpack && extractInfo"
+    "build": "npm run webpack && extractInfo && copyfiles -f ./gameart.png ./src/**/*.scss ./src/**/*.svg ./dist/"
   },
   "config": {
     "game": "Ace Combat 7: Skies Unknown"
@@ -32,6 +31,7 @@
     "@types/redux-thunk": "^2.1.0",
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",
+    "copyfiles": "^2.3.0",
     "electron": "4.2.4",
     "i18next": "^17.0.4",
     "react": "^16.8.6",
