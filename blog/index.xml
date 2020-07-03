@@ -1,4 +1,10 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 0.2 Release</title><link>/blog/2020/05/25/alpha-0.2-release/</link><pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate><guid>/blog/2020/05/25/alpha-0.2-release/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 1 Release</title><link>/blog/2020/07/02/alpha-1-release/</link><pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate><guid>/blog/2020/07/02/alpha-1-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is a significant upgrade on the &lt;a href="../updates/v0.0.2">previous pre-alpha&lt;/a> so we&amp;rsquo;ve bumped this release up to alpha status: version 0.1.0!&lt;/p>
+&lt;p>The most notable change in this release is a complete rebuild of the installer logic that will now detect when you&amp;rsquo;re installing an archive with multiple mod files and walk you through which files to install. This should dramatically improve mod compatibility, especially with a lot of the mods currently available on Nexus Mods.&lt;/p>
+&lt;p>This is all-new logic so please report any issues you find &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>. If things go really awry, you can also turn off the new installer in the Settings page.&lt;/p></description></item><item><title>Blog: Alpha 0.2 Release</title><link>/blog/2020/05/25/alpha-0.2-release/</link><pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate><guid>/blog/2020/05/25/alpha-0.2-release/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
 &lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
 &lt;/div>
