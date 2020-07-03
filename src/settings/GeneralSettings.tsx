@@ -1,0 +1,66 @@
+import * as React from 'react';
+import { connect } from 'react-redux';
+import * as Redux from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
+import { withTranslation } from 'react-i18next';
+import { Toggle, ComponentEx, More, util } from 'vortex-api';
+import { enableAdvancedInstaller } from './actions';
+import { IState } from 'vortex-api/lib/types/api';
+const { HelpBlock, FormGroup, ControlLabel } = require('react-bootstrap');
+
+interface IBaseProps {
+    t: any
+}
+
+interface IConnectedProps {
+    enableAdvanced: boolean;
+}
+
+interface IActionProps {
+    onEnableAdvanced: (enable: boolean) => void;
+}
+
+type IProps = IConnectedProps & IActionProps & IBaseProps;
+
+class GeneralSettings extends ComponentEx<IProps, {}> {
+
+    public render(): JSX.Element {
+        const { t, enableAdvanced, onEnableAdvanced } = this.props;
+        return (
+            <form>
+                <FormGroup>
+                    <ControlLabel>{t('Enable Advanced Installer for AC7')}</ControlLabel>
+                    <HelpBlock>
+                        {t('Use the option below to disable the interactive installer for AC7 mods and fall back to using a basic installer. Only turn this off if you are having problems with the default installer!')}
+                    </HelpBlock>
+                    <Toggle
+                        checked={enableAdvanced}
+                        onToggle={onEnableAdvanced}
+                    >
+                        {t("Enable Interactive Installer")}
+                        <More id='ac7-advanced' name='Advanced Interactive Installer'>
+                            {t("When installing archives with more than one mod file, AceVortex will attempt to walk you through installing only the files you need. You can use this option to turn off this behaviour and simply install the first directory containing mod files it finds in the archive. Only change this if you know what you're doing!")}
+                        </More>
+                    </Toggle>
+                </FormGroup>
+            </form>
+        );
+    }
+}
+
+
+function mapStateToProps(state: IState): IConnectedProps {
+    // log('debug', 'mapping beatvortex state to props');
+    return {
+        enableAdvanced: util.getSafe(state.settings, ['acevortex', 'installer'], true)
+    };
+}
+
+function mapDispatchToProps(dispatch: ThunkDispatch<any, null, Redux.Action>): IActionProps {
+    return {
+        onEnableAdvanced: (enable: boolean) => dispatch(enableAdvancedInstaller(enable))
+    }
+}
+
+export default
+    withTranslation(['common', 'game-acecombat7skiesunknown'])(connect(mapStateToProps, mapDispatchToProps)(GeneralSettings));

@@ -4,7 +4,8 @@ import { IExtensionContext, IDiscoveryResult, IState, ISupportedResult, Progress
 import { InstructionType, IInstruction } from 'vortex-api/lib/extensions/mod_management/types/IInstallResult';
 import { UnrealGameHelper, ProfileClient } from "vortex-ext-common";
 
-import { groupBy } from "./util";
+import { groupBy, isGameManaged } from "./util";
+import { GeneralSettings, settingsReducer } from "./settings";
 
 export const GAME_ID = 'acecombat7skiesunknown'
 export const STEAMAPP_ID = 502500;
@@ -28,8 +29,12 @@ export function findGame() {
 
 //This is the main function Vortex will run when detecting the game extension. 
 function main(context: IExtensionContext) {
-    // unreal = new UnrealGameHelper(GAME_ID);
-    unreal.enableFallback = () => new ProfileClient(context.api.store).getProfileSetting(PROFILE_SETTINGS.AllowUnknown, false);
+    const isAceCombatManaged = (): boolean => {
+        return isGameManaged(context.api);
+    }
+    
+    context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
+    context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
     });
     context.registerGame({
@@ -62,7 +67,7 @@ function main(context: IExtensionContext) {
         'ac7-pakmods',
         25,
         unreal.testSupportedContent,
-        (files, destination, gameId, progress) => installContent(context.api, files, destination, gameId)
+        (files, destination, gameId, progress) => installContent(context.api, files, destination, gameId, progress)
     );
 
     // addProfileFeatures(context);
@@ -81,8 +86,12 @@ function main(context: IExtensionContext) {
  *
  * @returns Install instructions for mapping mod files to output location.
  */
-async function installContent(api: IExtensionApi, files: string[], destinationPath: string, gameId: string): Promise<IInstallResult> {
+async function installContent(api: IExtensionApi, files: string[], destinationPath: string, gameId: string, progress: ProgressDelegate): Promise<IInstallResult> {
     log('debug', `running acevortex installer. [${gameId}]`, { files, destinationPath });
+    var enableAdvanced = util.getSafe(api.getState().settings, ['acevortex', 'installer'], true);
+    if (!enableAdvanced) {
+        return unreal.installContent(files, destinationPath, gameId, progress);
+    }
     //basically need to keep descending until we find a reliable indicator of mod root
     const allPaks = files.filter(file => path.extname(file).toLowerCase() === MOD_FILE_EXT);
     const uniquePakRoots = groupBy(allPaks, (pakPath) => {
