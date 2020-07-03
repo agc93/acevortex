@@ -2,7 +2,6 @@
 title: "Alpha 1 Release"
 linkTitle: "Release 0.1.0"
 date: 2020-07-02
-draft: true
 aliases:
   - /updates/v0.1.0
 description: >

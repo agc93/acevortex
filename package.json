@@ -1,6 +1,6 @@
 {
   "name": "game-acecombat7skiesunknown",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Adds support for Ace Combat 7: Skies Unknown mods in Vortex",
   "main": "./dist/index.js",
   "scripts": {
