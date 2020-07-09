@@ -2,7 +2,7 @@ import { IExtensionApi, IProfile } from "vortex-api/lib/types/api";
 import { util } from "vortex-api";
 import { GAME_ID } from ".";
 
-export const groupBy = function<T> (arr: T[], criteria: string|((obj:T) => T)): {[key: string]: T[]} {
+export const groupBy = function<T> (arr: T[], criteria: string|((obj:T) => string)): {[key: string]: T[]} {
 	return arr.reduce(function (obj, item) {
 
 		// Check if the criteria is a function to run on the item or a property of it
