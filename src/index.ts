@@ -5,7 +5,7 @@ import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common
 
 import { groupBy, isGameManaged } from "./util";
 import { GeneralSettings, settingsReducer } from "./settings";
-import { checkForConflicts } from "./slots";
+import { checkForConflicts, updateSlots } from "./slots";
 import { advancedInstall } from "./install";
 import { tableAttributes, getSkinName } from "./attributes";
 
@@ -32,10 +32,20 @@ function main(context: IExtensionContext) {
     const isAceCombatManaged = (): boolean => {
         return isGameManaged(context.api);
     }
-    
+    const refreshSkins = (instanceIds: string[]) => {
+        const state = context.api.store.getState();
+        const gameId = selectors.activeGameId(state);
+        var mods = instanceIds.map(i => {
+            return util.getSafe<IMod>(state.persistent.mods, [gameId, i], undefined);
+        })
+        .filter(m => m);
+        updateSlots(context.api, mods)
+      };
+
     context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
     context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
+        util.installIconSet('acevortex', path.join(__dirname, 'icons.svg'));
         context.api.onAsync('did-deploy', (profileId: string, deployment: { [typeId: string]: IDeployedFile[] }) => {
             if (isActiveGame(context.api, GAME_ID)) {
                 log('debug', 'running skin slot event handler');
@@ -71,6 +81,11 @@ function main(context: IExtensionContext) {
             steamAppId: STEAMAPP_ID
         }
     });
+
+    context.registerAction('mods-action-icons', 201, 'aircraft', {},
+                         'Refresh Skins', refreshSkins, () => isActiveGame(context.api, GAME_ID));
+    context.registerAction('mods-multirow-actions', 201, 'aircraft', {},
+                         'Refresh Skins', refreshSkins, () => isActiveGame(context.api, GAME_ID));
 
     context.registerInstaller(
         'ac7-pakmods',

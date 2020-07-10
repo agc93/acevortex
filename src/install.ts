@@ -29,6 +29,7 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
         installInstructions = await installFromMultiplePaths(api, uniquePakRoots, files);
     }
     let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
+    instructions = instructions.concat(getPaks(installInstructions) ?? []);
     return Promise.resolve({instructions})
 }
 
@@ -60,7 +61,7 @@ async function installFromMultiplePaths(api: IExtensionApi, pakRoots: GroupedPat
     } else if (result.action == 'Install All' || result.action == 'Install All_plural') {
         log('debug', JSON.stringify(result.input));
         let instructions: IInstruction[] = [];
-        instructions = keys.flatMap(k => buildInstructions(files, pakRoots[k][0]));
+        instructions = keys.flatMap(k => buildFlatInstructions(files, k));
         return Promise.resolve(instructions);
     } else if (result.action == 'Install Selected') {
         var selections: string[] = Object.keys(result.input).filter(s => result.input[s]);
@@ -107,7 +108,7 @@ async function installMultipleModArchive(api: IExtensionApi, selections: string[
 
 function buildFlatInstructions(files: string[], rootPath: string, sourceFilter?: (sourceFile: string) => boolean) {
     log('debug', 'building installer instructions', {rootPath, files});
-    let filtered = files.filter(f => path.dirname(f) == rootPath);
+    let filtered = files.filter(f => (!f.endsWith(path.sep)) && path.dirname(f) == rootPath);
     if (sourceFilter) {
         filtered = filtered.filter(ff => sourceFilter(ff));
     }
@@ -156,17 +157,29 @@ function getSlots(instructions: IInstruction[], destinationPath: string): IInstr
         .map((pf: IInstruction) => {
             var ident = reader.getSkinIdentifier(path.join(destinationPath, pf.source));
             if (ident) {
-                var attrs = {
-                    skinAircraft: ident.aircraft,
-                    skinSlot: ident.slot
-                };
-                return attrs
+                return ident;
             }
             return null;
         })
         .filter(pfi => pfi != null && pfi != undefined);
     if (idents) {
-        attrs.push({ type: 'attribute', key: 'skinSlots', value: [...new Set(idents.map(i => `${i.skinAircraft}|${i.skinSlot}`))] as any});
+        attrs.push({ type: 'attribute', key: 'skinSlots', value: [...new Set(idents.map(i => `${i.aircraft}|${i.slot}`))] as any});
     }
     return attrs;
+}
+
+function getPaks(instructions: IInstruction[]): IInstruction[] {
+    var attrs: IInstruction[] = [];
+    var paks = instructions
+        .filter(i => path.extname(i.source) == MOD_FILE_EXT)
+        .map(pf => pf.source);
+    if (paks) {
+        return [
+            {
+                type: 'attribute',
+                key: 'notes',
+                value: `Installed PAK files:\n${paks.map(p => '- ' + p).join('\n')}`
+            }
+        ]
+    };
 }
