@@ -1,4 +1,21 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 1 Release</title><link>/blog/2020/07/02/alpha-1-release/</link><pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate><guid>/blog/2020/07/02/alpha-1-release/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 1.1 Release</title><link>/blog/2020/07/09/alpha-1.1-release/</link><pubDate>Thu, 09 Jul 2020 00:00:00 +0000</pubDate><guid>/blog/2020/07/09/alpha-1.1-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is another big upgrade on the &lt;a href="../updates/v0.1.0">previous alpha&lt;/a> with a bunch of new features!&lt;/p>
+&lt;p>The biggest change in this release is that we&amp;rsquo;ve added proper integration for skin mods, including skin slot detection! When you install a skins mod (assuming you use the &lt;a href="../updates/v0.1.0">new and improved installer&lt;/a>), Vortex will read the &lt;code>.pak&lt;/code> files you install and try and automatically detect what aircraft and slot the mod is intended for. You can check what skins a mod provides in the details panel (double-click on the mod in the Mods list).&lt;/p>
+&lt;p>Whenever you deploy your mods, AceVortex will also run a quick check to try and see if any of your mods are trying to replace the same slot and give you a warning so you can change what slots you are using. For any skin mods you had installed before this update, you can right-click the Mod and select &amp;ldquo;Refresh Skins&amp;rdquo; to auto-detect the skin slots.&lt;/p>
+&lt;blockquote>
+&lt;p>All of the automatic skin slot features are a) very new and potentially not 100% stable and b) not guaranteed to work. Depending on how the mod was packed, we might not be able to auto-detect the slot and you will have to keep track of those mods yourself.&lt;/p>
+&lt;/blockquote>
+&lt;p>Other changes in this release include:&lt;/p>
+&lt;ul>
+&lt;li>Installer will now include what paks you chose as mod notes&lt;/li>
+&lt;li>Improved installer when installing &amp;ldquo;all&amp;rdquo; paks in a mod&lt;/li>
+&lt;li>Added skin slot attribute with slot names&lt;/li>
+&lt;li>A lot of behind-the-scenes refactoring for the new installer&lt;/li>
+&lt;/ul>
+&lt;p>This is all-new functionality so please report any issues you find &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>. If things go really awry, you can also turn off the new installer in the Settings page.&lt;/p></description></item><item><title>Blog: Alpha 1 Release</title><link>/blog/2020/07/02/alpha-1-release/</link><pubDate>Thu, 02 Jul 2020 00:00:00 +0000</pubDate><guid>/blog/2020/07/02/alpha-1-release/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
 &lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
 &lt;/div>
