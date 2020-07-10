@@ -13,7 +13,7 @@ export class SlotReader {
             // log('debug', 'read pak file into buffer', {length: fileBuffer.length, path: filePath});
             var key = fileBuffer.indexOf(Buffer.from(searchKey));
             if (key && key != -1) /* I don't honestly know what this returns when its not found */ {
-                var rawString = fileBuffer.toString('utf8', key + 6, key + 26);
+                var rawString = fileBuffer.toString('utf8', key + 6, key + 56);
                 // log('debug', 'found key in pak file', {key, rawString}); //TODO: remove
                 var pattern = new RegExp(/([a-z0-9]+?)_(v?\d+a?\w{1}?)_(\w).*/);
                 if (pattern.test(rawString)) {

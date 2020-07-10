@@ -16,7 +16,6 @@ export const unreal: UnrealGameHelper = new UnrealGameHelper(GAME_ID);
 
 export type ModList = { [modId: string]: IMod; };
 
-let GAME_PATH = '';
 const relModPath = path.join('Game', 'Content', 'Paks', '~mods');
 
 export type GroupedPaths = { [key: string]: string[] }
@@ -74,8 +73,7 @@ function main(context: IExtensionContext) {
             // prepareForModding(discovery);
         },
         environment: {
-            SteamAPPId: STEAMAPP_ID.toString(),
-            gamepath: GAME_PATH
+            SteamAPPId: STEAMAPP_ID.toString()
         },
         details: {
             steamAppId: STEAMAPP_ID
@@ -100,7 +98,6 @@ function main(context: IExtensionContext) {
         condition: () => selectors.activeGameId(context.api.getState()) === GAME_ID,
     })
 
-    // addProfileFeatures(context);
     return true
 }
 
