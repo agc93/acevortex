@@ -11,6 +11,15 @@ export const tableAttributes: {[name: string]: ITableAttribute} = {
         isToggleable: true,
         isSortable: true
     },
+    installedPaks: {
+        id: 'acev-paks',
+        placement: 'detail',
+        name: 'Installed files',
+        help: 'Which specific files from the mod were installed',
+        edit: {},
+        isToggleable: true,
+        isSortable: false
+    }
 }
 
 const slotNames = {

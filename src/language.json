@@ -1,0 +1,4 @@
+{
+    "{{ count }} installed files": "{{ count }} installed file",
+    "{{ count }} installed files_plural": "{{ count }} installed files"
+}

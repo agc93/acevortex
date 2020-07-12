@@ -5,7 +5,7 @@
   "main": "./dist/index.js",
   "scripts": {
     "webpack": "node ./node_modules/webpack/bin/webpack --config webpack.config.js --display-error-details --progress --profile --color",
-    "build": "npm run webpack && extractInfo && copyfiles -f ./gameart.png ./src/**/*.scss ./src/**/*.svg ./dist/"
+    "build": "npm run webpack && extractInfo && copyfiles -f ./gameart.png ./src/**/*.scss ./src/**/*.svg ./src/*.json ./dist/"
   },
   "config": {
     "game": "Ace Combat 7: Skies Unknown"

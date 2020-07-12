@@ -7,9 +7,10 @@ import { groupBy, isGameManaged } from "./util";
 import { GeneralSettings, settingsReducer } from "./settings";
 import { checkForConflicts, updateSlots } from "./slots";
 import { advancedInstall } from "./install";
-import { tableAttributes, getSkinName } from "./attributes";
+import { tableAttributes, getSkinName, installedFilesRenderer } from "./attributes";
 
 export const GAME_ID = 'acecombat7skiesunknown'
+export const I18N_NAMESPACE = 'game-acecombat7skiesunknown';
 export const STEAMAPP_ID = 502500;
 export const MOD_FILE_EXT = ".pak";
 export const unreal: UnrealGameHelper = new UnrealGameHelper(GAME_ID);
@@ -44,6 +45,13 @@ function main(context: IExtensionContext) {
     context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
     context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
+        try {
+            var langContent = fs.readFileSync(path.join(__dirname, 'language.json'), {encoding: 'utf-8'});
+            context.api.getI18n().addResources('en', I18N_NAMESPACE, JSON.parse(langContent));
+            // using require here instead of `fs` means that webpack will bundle the language file for us
+            // unfortunately this doesn't seem to actually work for some reason.
+            // context.api.getI18n().addResources('en', I18N_NAMESPACE, require('./language.json'));
+        } catch { }
         util.installIconSet('acevortex', path.join(__dirname, 'icons.svg'));
         context.api.onAsync('did-deploy', (profileId: string, deployment: { [typeId: string]: IDeployedFile[] }) => {
             if (isActiveGame(context.api, GAME_ID)) {
@@ -52,8 +60,6 @@ function main(context: IExtensionContext) {
             }
             return Promise.resolve();
         });
-        // var ident = new SlotReader(context.api).getSkinIdentifier('C:\\Users\\alist\\AppData\\Roaming\\Vortex\\acecombat7skiesunknown\\mods\\VF-103 Jolly Rogers-13-1-0-1554925693\\F14D_VF103_JollyRogers.pak');
-        // log('debug', 'retrieved skin ident', {ident});
     });
     context.registerGame({
         name: "Ace Combat 7: Skies Unknown",
@@ -93,10 +99,16 @@ function main(context: IExtensionContext) {
     );
 
     context.registerTableAttribute('mods', {
+        ...tableAttributes.installedPaks,
+        calc: (mod: IMod) => util.getSafe(mod.attributes, ['installedPaks'], []),
+        condition: () => isActiveGame(context.api, GAME_ID),
+        customRenderer: (mod: IMod) => installedFilesRenderer(context.api, mod)
+    });
+    context.registerTableAttribute('mods', {
         ...tableAttributes.skins,
         calc: (mod: IMod) => getSkinName(mod),
         condition: () => selectors.activeGameId(context.api.getState()) === GAME_ID,
-    })
+    });
 
     return true
 }

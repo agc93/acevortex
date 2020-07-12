@@ -115,7 +115,7 @@ function buildFlatInstructions(files: string[], rootPath: string, sourceFilter?:
     log('debug', 'filtered extraneous files', { root: rootPath, candidates: filtered });
     const instructions = filtered.map(file => {
         // const destination = file.substr(firstType.indexOf(path.basename(root)) + root.length).replace(/^\\+/g, '');
-        const destination = path.join(file.substr(file.indexOf(rootPath) + rootPath.length + 1));
+        const destination = rootPath == '.' ? file : path.join(file.substr(file.indexOf(rootPath) + rootPath.length + 1));
         return {
             type: 'copy' as InstructionType,
             source: file,
@@ -169,7 +169,6 @@ function getSlots(instructions: IInstruction[], destinationPath: string): IInstr
 }
 
 function getPaks(instructions: IInstruction[]): IInstruction[] {
-    var attrs: IInstruction[] = [];
     var paks = instructions
         .filter(i => path.extname(i.source) == MOD_FILE_EXT)
         .map(pf => pf.source);
@@ -177,8 +176,8 @@ function getPaks(instructions: IInstruction[]): IInstruction[] {
         return [
             {
                 type: 'attribute',
-                key: 'notes',
-                value: `Installed PAK files:\n${paks.map(p => '- ' + p).join('\n')}`
+                key: 'installedPaks',
+                value: paks as any
             }
         ]
     };
