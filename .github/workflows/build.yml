@@ -57,7 +57,7 @@ jobs:
         body: |
           Download and install using the Extensions pane in Vortex.
 
-          To manually install, extract the zip to C:\Users\<user-name>\AppData\Roaming\Vortex\plugins\game-acecombat7skiesunknown.
+          To manually install, extract the zip to %APPDATA%\Vortex\plugins\game-acecombat7skiesunknown.
 
           Read about the changes in this release at [ac7.vortex.support/updates/${{ steps.vars.outputs.tag }}](https://ac7.vortex.support/updates/${{ steps.vars.outputs.tag }}).
         files: |
