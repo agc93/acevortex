@@ -1,10 +1,11 @@
 import { IExtensionApi, ProgressDelegate, IInstallResult, IDialogResult, ICheckbox, IInstruction } from "vortex-api/lib/types/api";
 import path = require("path");
-import { log } from "vortex-api";
+import { log, util } from "vortex-api";
 import { groupBy } from "./util";
 import { MOD_FILE_EXT, GroupedPaths, unreal } from ".";
 import { InstructionType } from "vortex-api/lib/extensions/mod_management/types/IInstallResult";
 import { SlotReader } from "./slots";
+import { getModName } from "vortex-ext-common/dist/util";
 
 export async function advancedInstall(api: IExtensionApi, files: string[], destinationPath: string, gameId: string, progress: ProgressDelegate): Promise<IInstallResult> {
     //basically need to keep descending until we find a reliable indicator of mod root
@@ -29,6 +30,7 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
         installInstructions = await installFromMultiplePaths(api, uniquePakRoots, files);
     }
     let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
+    instructions = instructions.concat(getReadme(files, destinationPath) ?? []);
     instructions = instructions.concat(getPaks(installInstructions) ?? []);
     return Promise.resolve({instructions})
 }
@@ -181,4 +183,25 @@ function getPaks(instructions: IInstruction[]): IInstruction[] {
             }
         ]
     };
+}
+
+function getReadme(files: string[], destinationPath: string) : IInstruction[] {
+    try {
+        if (files.filter(f => path.extname(f) == '.txt').length == 1) {
+            //we've got just one txt file, assume it's a README
+            var textFile = files.find(f => path.extname(f) == '.txt');
+            log('debug', 'found txt file in archive, installing as README', {filePath: textFile});
+            var modName = getModName(destinationPath);
+            return [
+                {
+                    type: 'copy',
+                    source: textFile,
+                    destination: path.join('README', util.deriveInstallName(modName, {}) + '.txt')
+                }
+            ]
+        }
+    } catch {
+        //ignored
+        return [];
+    }
 }
