@@ -43,12 +43,14 @@ C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game
 C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game-acecombat7skiesunknown\gameart.png
 &lt;/code>&lt;/pre>&lt;/div>&lt;p>With those files in place, you&amp;rsquo;re clear to start Vortex and you should see the C&amp;amp;C Remastered icon in the Games screen light up.&lt;/p></description></item><item><title>Docs: Installing Mods</title><link>/docs/usage/mods/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/docs/usage/mods/</guid><description>
 &lt;p>At it&amp;rsquo;s core, installing mods is roughly the same as any Vortex-enabled game, once you&amp;rsquo;ve added C&amp;amp;C Remastered as a managed game in Vortex.&lt;/p>
-&lt;p>If you haven&amp;rsquo;t already, open the Games screen and click the &lt;strong>Manage&lt;/strong> button on the C&amp;amp;C Remastered icon under &lt;em>Unmanaged&lt;/em>&lt;/p>
+&lt;p>If you haven&amp;rsquo;t already, open the Games screen and click the &lt;strong>Manage&lt;/strong> button on the Ace Combat 7: Skies Unknown icon under &lt;em>Unmanaged&lt;/em>&lt;/p>
 &lt;hr>
 &lt;h2 id="installing-from-nexus-mods">Installing from Nexus Mods&lt;/h2>
 &lt;p>If you&amp;rsquo;re installing mods from Nexus Mods, you can use the &amp;ldquo;Vortex&amp;rdquo; or &amp;ldquo;Download with Mod Manager&amp;rdquo; buttons on the mod page to automatically open Vortex and download the mod. Simply Install and Enable like usual and you should be good to go.&lt;/p>
 &lt;h3 id="installing-archives-with-multiple-mod-files">Installing archives with multiple mod files&lt;/h3>
 &lt;p>If you install a file from Nexus Mods that has multiple game mod files (i.e. &lt;code>.pak&lt;/code> files), you will see a prompt that should walk you through the process of choosing which mod files you want to install. Remember that since Vortex doesn&amp;rsquo;t actually read your game files, it won&amp;rsquo;t be able to detect skin slot conflicts automatically.&lt;/p>
+&lt;h3 id="managing-your-skin-slots">Managing your skin slots&lt;/h3>
+&lt;p>If you install a lot of skin mods, you will likely run into problems where you have multiple mods that replace the same skin slot. Since 0.1.0, AceVortex will attempt to read which slot a skin replaces when you install a mod. If you install multiple mods that replace the same aircraft skin, you&amp;rsquo;ll get a warning when you deploy. At any time, you can also check which skins a mod includes by double-clicking the mod in the Mods list and checking the details in the panel on the right.&lt;/p>
 &lt;h2 id="install-from-archives">Install from archives&lt;/h2>
 &lt;p>You can also download mod archives directly from Nexus Mods or anywhere else you like and install them with Vortex. Simply use the &lt;em>Install From File&lt;/em> button in the toolbar or drop them onto the drop zone at the bottom of the Vortex window.&lt;/p>
 &lt;blockquote>
@@ -58,6 +60,8 @@ C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game
 &lt;p>You can customise the basic metadata of any of your mods (name, author, notes etc) using Vortex&amp;rsquo;s built-in sidebar. Just double-click on the name of any mod in your mod list and you&amp;rsquo;ll get a small dialog where you can change the name and author, or add some notes for yourself. It&amp;rsquo;s not recommended to change the source or mod type as these control how mods are handled internally.&lt;/p>
 &lt;h3 id="profiles">Profiles&lt;/h3>
 &lt;p>Just like any other Vortex game, you can have multiple profiles configured for different mod selections. Want an easier way to switch between certain sets of skins? Don&amp;rsquo;t want to use all your wild skins every time you play? Set up profiles and you can easily switch between them to keep your mod installs separate. You can create a new profile from the Profiles screen by either cloning your exising one (from the Edit dropdown menu), or clicking &lt;em>Add &amp;ldquo;Ace Combat 7: Skies Unknown&amp;rdquo; Profile&lt;/em>.&lt;/p>
+&lt;h3 id="checking-installed-files">Checking installed files&lt;/h3>
+&lt;p>If you installed a mod using the guided installer, it&amp;rsquo;s possible you only installed some &lt;code>.pak&lt;/code> files from the original mod archive. If you need to check which files you installed for any reason, you can find them in the mod details panel. Double click the relevant mod in the Mods list and scroll down in the panel on the right to find out how many files you installed. Click on the summary (i.e. &lt;em>2 installed files&lt;/em>) to see exactly which files you chose to isntall.&lt;/p>
 &lt;h3 id="purging-to-default">Purging to default&lt;/h3>
 &lt;p>If you want to take your game back to a default, unmodded state, you can use Vortex&amp;rsquo;s &lt;em>Purge&lt;/em> feature. Click the Purge Mods button from the Mods list and Vortex will undeploy all your enabled mods, leaving your game directory essentially unmodded.&lt;/p>
 &lt;h3 id="removing-or-resetting-acevortex">Removing or resetting AceVortex&lt;/h3>
@@ -67,4 +71,6 @@ C:\Users\&amp;lt;your-user-name-here&amp;gt;\AppData\Roaming\Vortex\plugins\game
 &lt;p>Note that AC7 will still show up in your Games list since Vortex can redownload the extension from Nexus Mods.&lt;/p>
 &lt;/blockquote>
 &lt;h3 id="multiple-installation-variants">Multiple Installation Variants&lt;/h3>
-&lt;p>If you don&amp;rsquo;t like the specific skin/slot choices you made when you installed one of your mods, remember that you can always reinstall the mod and use Vortex&amp;rsquo;s &lt;em>variant&lt;/em> functionality to easily switch between multiple versions of the same mod without affecting the rest of your mod list.&lt;/p></description></item></channel></rss>
+&lt;p>If you don&amp;rsquo;t like the specific skin/slot choices you made when you installed one of your mods, remember that you can always reinstall the mod and use Vortex&amp;rsquo;s &lt;em>variant&lt;/em> functionality to easily switch between multiple versions of the same mod without affecting the rest of your mod list.&lt;/p>
+&lt;h3 id="ini-workarounds">INI Workarounds&lt;/h3>
+&lt;p>If skins you install appear &lt;strong>very&lt;/strong> blurry in game, it&amp;rsquo;s possible there&amp;rsquo;s a problem with the skin&amp;rsquo;s mipmapping and how AC7 loads skin textures. There are a couple of keys you can add to your game&amp;rsquo;s configuration file using the tweaks in the Workarounds tab of the Settings page.&lt;/p></description></item></channel></rss>
