@@ -6,6 +6,7 @@ import { MOD_FILE_EXT, GroupedPaths, unreal } from ".";
 import { InstructionType } from "vortex-api/lib/extensions/mod_management/types/IInstallResult";
 import { SlotReader } from "./slots";
 import { getModName } from "vortex-ext-common/dist/util";
+import { Features } from "./settings";
 
 export async function advancedInstall(api: IExtensionApi, files: string[], destinationPath: string, gameId: string, progress: ProgressDelegate): Promise<IInstallResult> {
     //basically need to keep descending until we find a reliable indicator of mod root
@@ -30,7 +31,9 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
         installInstructions = await installFromMultiplePaths(api, uniquePakRoots, files);
     }
     let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
-    instructions = instructions.concat(getReadme(files, destinationPath) ?? []);
+    if (Features.readmesEnabled(api.getState())) {
+        instructions = instructions.concat(getReadme(files, destinationPath) ?? []);
+    }
     instructions = instructions.concat(getPaks(installInstructions) ?? []);
     return Promise.resolve({instructions})
 }

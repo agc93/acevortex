@@ -1,8 +1,6 @@
 import { createAction } from 'redux-act';
-// import { safeCreateAction } from 'vortex-api/lib/actions/safeCreateAction';
-import { util, actions } from "vortex-api";
-import { IReducerSpec } from 'vortex-api/lib/types/api';
-// import { ILinkHandling } from './settings';
+import { util } from "vortex-api";
+import { IReducerSpec, IState } from 'vortex-api/lib/types/api';
 
 /*
  * enable the more advanced installer
@@ -10,16 +8,32 @@ import { IReducerSpec } from 'vortex-api/lib/types/api';
 export const enableAdvancedInstaller =
     createAction('AC7_ENABLE_INSTALLER', (enable: boolean) => enable);
 
+export const enableInstallReadmes =
+    createAction('AC7_INSTALL_READMES', (enable: boolean) => enable);
+
 /**
  * reducer for extension settings
  */
 export const settingsReducer: IReducerSpec = {
     reducers: {
         [enableAdvancedInstaller as any]: (state, payload: boolean) => {
-            return util.setSafe(state, ['installer'], payload)
+            return util.setSafe(state, ['installer'], payload);
+        },
+        [enableInstallReadmes as any]: (state, payload: boolean) => {
+            return util.setSafe(state, ['installReadme'], payload);
         }
     },
     defaults: {
-        installer: true
+        installer: true,
+        installReadme: true
     }
 };
+
+export const Features = {
+    isInstallerEnabled: (state: IState): boolean => {
+        return util.getSafe(state.settings, ['acevortex', 'installer'], true);
+    },    
+    readmesEnabled: (state: IState): boolean => {
+        return util.getSafe(state.settings, ['acevortex', 'installReadme'], true);
+    }
+}

@@ -1,10 +1,10 @@
 import path = require('path');
 import { fs, log, util, selectors } from "vortex-api";
-import { IExtensionContext, IDiscoveryResult, IState, ISupportedResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IDialogResult, ICheckbox, IMod, IDeployedFile } from 'vortex-api/lib/types/api';
+import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile } from 'vortex-api/lib/types/api';
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
-import { groupBy, isGameManaged } from "./util";
-import { GeneralSettings, settingsReducer, TweakSettings } from "./settings";
+import { isGameManaged } from "./util";
+import { GeneralSettings, settingsReducer, TweakSettings, Features } from "./settings";
 import { checkForConflicts, updateSlots } from "./slots";
 import { advancedInstall } from "./install";
 import { tableAttributes, getSkinName, installedFilesRenderer } from "./attributes";
@@ -128,7 +128,8 @@ function main(context: IExtensionContext) {
  */
 async function installContent(api: IExtensionApi, files: string[], destinationPath: string, gameId: string, progress: ProgressDelegate): Promise<IInstallResult> {
     log('debug', `running acevortex installer. [${gameId}]`, { files, destinationPath });
-    var enableAdvanced = util.getSafe(api.getState().settings, ['acevortex', 'installer'], true);
+    // var enableAdvanced = util.getSafe(api.getState().settings, ['acevortex', 'installer'], true);
+    var enableAdvanced = Features.isInstallerEnabled(api.getState());
     if (!enableAdvanced) {
         return unreal.installContent(files, destinationPath, gameId, progress);
     } else {
