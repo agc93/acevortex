@@ -2,6 +2,9 @@ import { IExtensionApi, IProfile } from "vortex-api/lib/types/api";
 import { util } from "vortex-api";
 import { GAME_ID } from ".";
 
+import path = require('path');
+import { remote } from 'electron';
+
 export const groupBy = function<T> (arr: T[], criteria: string|((obj:T) => string)): {[key: string]: T[]} {
 	return arr.reduce(function (obj, item) {
 
@@ -28,4 +31,8 @@ export function isGameManaged(api: IExtensionApi): boolean {
     const gameProfiles: string[] = Object.keys(profiles)
       .filter((id: string) => profiles[id].gameId === GAME_ID);
     return gameProfiles && gameProfiles.length > 0;
+}
+
+export function getUserConfigPath(configName?: string) {
+    return path.join(remote.app.getPath('home'), 'AppData', 'Local', 'BANDAI NAMCO Entertainment', 'ACE COMBAT 7', 'Config', configName ?? 'Engine.ini');
 }

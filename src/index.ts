@@ -4,7 +4,7 @@ import { IExtensionContext, IDiscoveryResult, IState, ISupportedResult, Progress
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
 import { groupBy, isGameManaged } from "./util";
-import { GeneralSettings, settingsReducer } from "./settings";
+import { GeneralSettings, settingsReducer, TweakSettings } from "./settings";
 import { checkForConflicts, updateSlots } from "./slots";
 import { advancedInstall } from "./install";
 import { tableAttributes, getSkinName, installedFilesRenderer } from "./attributes";
@@ -43,6 +43,7 @@ function main(context: IExtensionContext) {
       };
 
     context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
+    context.registerSettings('Workarounds', TweakSettings, () => {t: context.api.translate}, isAceCombatManaged, 101);
     context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
         try {
