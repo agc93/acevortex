@@ -37,7 +37,7 @@ function getSlotName(slotIdent: string) {
         return knownName;
     } else {
         return /[a-z]/.test(slotIdent)
-            ? slotIdent
+            ? `NPC ${slotIdent}`
             : `0${Number.parseInt(slotIdent) + 1}`;
     }
 }

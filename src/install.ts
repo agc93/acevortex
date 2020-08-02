@@ -31,7 +31,7 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
         installInstructions = await installFromMultiplePaths(api, uniquePakRoots, files);
     }
     let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
-    if (Features.readmesEnabled(api.getState())) {
+    if (Features.readmesEnabled(api.getState()) && !unrealResult) {
         instructions = instructions.concat(getReadme(files, destinationPath) ?? []);
     }
     instructions = instructions.concat(getPaks(installInstructions) ?? []);
