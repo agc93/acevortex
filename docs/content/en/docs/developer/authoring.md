@@ -14,6 +14,10 @@ AceVortex tries to find a middle ground as much as possible.
 
 ---
 
+If you're a skin mod author and want to improve the experience for users, also check out [ACMI](https://acmi.modding.app/). It's a simple tool that can automatically generate Mod Installer files (aka FOMOD files) for your skin mods. Just include the `fomod` directory that ACMI generates in your mod archive when you upload it and Vortex will automatically use them to show users a nice guided wizard/installer to choose what files to install.
+
+---
+
 In an ideal world, each mod archive would only have one `.pak` file in it. This doesn't just make installation easier, this also gives us the potential for some extra features in future, like controlling load order or improving metadata.
 
 When a user installs a mod that has multiple `.pak` files, it runs a few checks and will start a guided process to install only the files it needs. The over-simplified version of the  installation is this:
