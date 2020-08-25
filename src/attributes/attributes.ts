@@ -28,7 +28,9 @@ const slotNames = {
     "02": "Special",
     "03": "Mage",
     "04": "Spare",
-    "05": "Strider"
+    "05": "Strider",
+    "06": "Slot 7",
+    "07": "Slot 8"
 };
 
 function getSlotName(slotIdent: string) {

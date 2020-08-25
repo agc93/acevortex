@@ -7,7 +7,7 @@ import nfs = require('fs');
 
 type SlotList = {[key: string]: IMod[]};
 
-export function checkForConflicts(api: IExtensionApi, files: IDeployedFile[]) {
+export function checkForConflicts(api: IExtensionApi, files: IDeployedFile[], conflictAction?: (slots: SlotList) => any) {
     var mods = util.getSafe<ModList>(api.getState().persistent, ['mods', GAME_ID], {});
     var deployedMods = [...new Set(files.map(f => mods[f.source]))];
     var skinMods = Object.values(deployedMods)
@@ -16,27 +16,31 @@ export function checkForConflicts(api: IExtensionApi, files: IDeployedFile[]) {
     var slotRoots = buildConflictList(skinMods);
     if (Object.keys(slotRoots).some(rk => slotRoots[rk].length > 1)) {
         var conflicts = removeNonConflicts(slotRoots);
-        api.sendNotification({
-            'type': 'warning',
-            title: 'Potential skin slot conflict!',
-            message: 'It looks like more than one mod is changing the same skin slot.',
-            actions: [
-                {
-                    title: 'See More',
-                    action: (dismiss) => {
-                        api.showDialog('error', 'Potential skin slot conflict!', {
-                            text: "It looks like more than one of the mods that was just deployed are modifying the same skin slot! This can lead to unexpected results and is probably not what you're looking for. The mods and slots in question are shown below.\n\nIf the mod came with multiple options for skin slots, you can try reinstalling and installing only some of the mod files.",
-                            options: {
-                                wrap: false
-                            },
-                            message: renderConflictList(conflicts)
-                        }, [
-                            {label: 'Continue', action: () => dismiss()}
-                        ]);
+        if (conflictAction) {
+            conflictAction(conflicts);
+        } else {
+            api.sendNotification({
+                'type': 'warning',
+                title: 'Potential skin slot conflict!',
+                message: 'It looks like more than one mod is changing the same skin slot.',
+                actions: [
+                    {
+                        title: 'See More',
+                        action: (dismiss) => {
+                            api.showDialog('error', 'Potential skin slot conflict!', {
+                                text: "It looks like more than one of the mods that was just deployed are modifying the same skin slot! This can lead to unexpected results and is probably not what you're looking for. The mods and slots in question are shown below.\n\nIf the mod came with multiple options for skin slots, you can try reinstalling and installing only some of the mod files.",
+                                options: {
+                                    wrap: false
+                                },
+                                message: renderConflictList(conflicts)
+                            }, [
+                                {label: 'Continue', action: () => dismiss()}
+                            ]);
+                        }
                     }
-                }
-            ]
-        });
+                ]
+            });
+        }
     }
 }
 
@@ -78,7 +82,7 @@ function removeNonConflicts(slots: SlotList) {
     return slots;
 }
 
-export async function updateSlots(api: IExtensionApi, mods: IMod[]) {
+export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boolean = true) {
     var reader = new SlotReader();
     var installedMods = mods
         .filter(m => m !== undefined && m !== null && m)
@@ -91,6 +95,10 @@ export async function updateSlots(api: IExtensionApi, mods: IMod[]) {
             .filter(de => de.isFile() && path.extname(de.name) == MOD_FILE_EXT)
             .map(den => path.join(modPath, den.name));
         if (files) {
+            var existingSkins = util.getSafe(mod.attributes, ['skinSlots'], undefined);
+            if (existingSkins !== undefined && !replace) {
+                return;
+            }
             var slots = files
                 .map(fi => {
                     var ident = reader.getSkinIdentifier(fi);

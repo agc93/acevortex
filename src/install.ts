@@ -66,7 +66,7 @@ async function installFromMultiplePaths(api: IExtensionApi, pakRoots: GroupedPat
     } else if (result.action == 'Install All' || result.action == 'Install All_plural') {
         log('debug', JSON.stringify(result.input));
         let instructions: IInstruction[] = [];
-        instructions = keys.flatMap(k => buildFlatInstructions(files, k));
+        instructions = keys.flatMap(k => buildFlatInstructions(api, files, k));
         return Promise.resolve(instructions);
     } else if (result.action == 'Install Selected') {
         var selections: string[] = Object.keys(result.input).filter(s => result.input[s]);
@@ -102,7 +102,7 @@ async function installMultipleModArchive(api: IExtensionApi, selections: string[
         } else if (pakResult.action == 'Install Selected') {
             let instructions: IInstruction[] = [];
             var modSelections: string[] = Object.keys(pakResult.input).filter(s => pakResult.input[s]);
-            instructions = selections.flatMap(k => buildFlatInstructions(files, k, (file) => modSelections.map(s => path.basename(s)).some(bn => bn == path.basename(file))));
+            instructions = selections.flatMap(k => buildFlatInstructions(api, files, k, (file) => modSelections.map(s => path.basename(s)).some(bn => bn == path.basename(file))));
             return Promise.resolve(instructions);
         }
     } else {
@@ -111,7 +111,7 @@ async function installMultipleModArchive(api: IExtensionApi, selections: string[
     }
 }
 
-function buildFlatInstructions(files: string[], rootPath: string, sourceFilter?: (sourceFile: string) => boolean) {
+function buildFlatInstructions(api: IExtensionApi, files: string[], rootPath: string, sourceFilter?: (sourceFile: string) => boolean) {
     log('debug', 'building installer instructions', {rootPath, files});
     let filtered = files.filter(f => (!f.endsWith(path.sep)) && path.dirname(f) == rootPath);
     if (sourceFilter) {
@@ -120,7 +120,13 @@ function buildFlatInstructions(files: string[], rootPath: string, sourceFilter?:
     log('debug', 'filtered extraneous files', { root: rootPath, candidates: filtered });
     const instructions = filtered.map(file => {
         // const destination = file.substr(firstType.indexOf(path.basename(root)) + root.length).replace(/^\\+/g, '');
-        const destination = rootPath == '.' ? file : path.join(file.substr(file.indexOf(rootPath) + rootPath.length + 1));
+        var destination = rootPath == '.' ? file : path.join(file.substr(file.indexOf(rootPath) + rootPath.length + 1));
+        if (path.extname(destination) == MOD_FILE_EXT && !destination.endsWith('_P.pak')) {
+            if (Features.isRenamingEnabled(api.getState())) {
+                log('debug', 'detected non-suffixed PAK file!', {destination});
+                destination = destination.replace('.pak', '_P.pak');
+            }
+        }
         return {
             type: 'copy' as InstructionType,
             source: file,

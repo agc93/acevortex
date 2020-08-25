@@ -1,6 +1,6 @@
 import path = require('path');
 import { fs, log, util, selectors } from "vortex-api";
-import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile } from 'vortex-api/lib/types/api';
+import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile, ITestResult } from 'vortex-api/lib/types/api';
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
 import { isGameManaged } from "./util";
@@ -32,14 +32,14 @@ function main(context: IExtensionContext) {
     const isAceCombatManaged = (): boolean => {
         return isGameManaged(context.api);
     }
-    const refreshSkins = (instanceIds: string[]) => {
+    const refreshSkins = (instanceIds: string[], clobber: boolean = true) => {
         const state = context.api.store.getState();
         const gameId = selectors.activeGameId(state);
         var mods = instanceIds.map(i => {
             return util.getSafe<IMod>(state.persistent.mods, [gameId, i], undefined);
         })
         .filter(m => m);
-        updateSlots(context.api, mods)
+        updateSlots(context.api, mods, clobber)
       };
 
     context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
@@ -61,6 +61,12 @@ function main(context: IExtensionContext) {
             }
             return Promise.resolve();
         });
+        /* context.api.events.on('mods-enabled', (modIds: string[], enabled: boolean, gameMode: string) => {
+            if (isActiveGame(context.api, GAME_ID)) {
+                refreshSkins(modIds, false);
+            }
+            return Promise.resolve();
+        }); */
     });
     context.registerGame({
         name: "Ace Combat 7: Skies Unknown",
@@ -77,7 +83,6 @@ function main(context: IExtensionContext) {
         setup: (discovery: IDiscoveryResult) => {
             log('debug', 'running acevortex setup')
             unreal.prepareforModding(discovery, relModPath)
-            // prepareForModding(discovery);
         },
         environment: {
             SteamAPPId: STEAMAPP_ID.toString()
@@ -135,10 +140,7 @@ async function installContent(api: IExtensionApi, files: string[], destinationPa
     } else {
         return advancedInstall(api, files, destinationPath, gameId, progress);
     }
-    
 }
-
-
 
 module.exports = {
     default: main,

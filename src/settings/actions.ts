@@ -11,6 +11,9 @@ export const enableAdvancedInstaller =
 export const enableInstallReadmes =
     createAction('AC7_INSTALL_READMES', (enable: boolean) => enable);
 
+export const enableFileNameFix =
+    createAction('AC7_INSTALL_RENAMER', (enable: boolean) => enable);
+
 /**
  * reducer for extension settings
  */
@@ -21,11 +24,15 @@ export const settingsReducer: IReducerSpec = {
         },
         [enableInstallReadmes as any]: (state, payload: boolean) => {
             return util.setSafe(state, ['installReadme'], payload);
+        },
+        [enableFileNameFix as any]: (state, payload: boolean) => {
+            return util.setSafe(state, ['renameFiles'], payload);
         }
     },
     defaults: {
         installer: true,
-        installReadme: true
+        installReadme: true,
+        renameFiles: true
     }
 };
 
@@ -35,5 +42,8 @@ export const Features = {
     },    
     readmesEnabled: (state: IState): boolean => {
         return util.getSafe(state.settings, ['acevortex', 'installReadme'], true);
+    },
+    isRenamingEnabled: (state: IState): boolean => {
+        return util.getSafe(state.settings, ['acevortex', 'renameFiles'], true);
     }
 }
