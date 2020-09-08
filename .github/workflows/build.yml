@@ -76,7 +76,7 @@ jobs:
     - name: Restore Tools
       shell: bash
       run: |
-          dotnet tool install NexusUploader
+          dotnet tool install -g NexusUploader
     - name: Download build artifact
       uses: actions/download-artifact@v1
       with:
@@ -94,7 +94,7 @@ jobs:
     - name: Validate unex config
       shell: bash
       run: |
-        dotnet unex check -c
+        unex check -c
       env:
         UNEX_APIKEY: ${{ secrets.NEXUS_TOKEN }}
         UNEX_COOKIES: ${{ secrets.NEXUS_COOKIES }}
@@ -102,7 +102,7 @@ jobs:
     - name: Run Nexus uploader
       shell: bash
       run: |
-        dotnet unex upload 125 ./extension/game-acecombat7skiesunknown.zip -v ${{ steps.vars.outputs.tag }}
+        unex upload 125 ./extension/game-acecombat7skiesunknown.zip -v ${{ steps.vars.outputs.tag }}
       env:
         UNEX_APIKEY: ${{ secrets.NEXUS_TOKEN }}
         UNEX_COOKIES: ${{ secrets.NEXUS_COOKIES }}
