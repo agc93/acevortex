@@ -24,14 +24,16 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
         if (uniquePakRoots[keys[0]].length > 1) {
             installInstructions = await installMultipleModArchive(api, keys, uniquePakRoots, files);
         } else {
-            var unrealResult = await unreal.installContent(files, destinationPath, gameId, null);
-            installInstructions = unrealResult.instructions;
+            // var unrealResult = await unreal.installContent(files, destinationPath, gameId, null);
+            // installInstructions = unrealResult.instructions;
+            installInstructions = buildFlatInstructions(api, files, keys[0]);
         }
     } else if (keys.length > 1) {
         installInstructions = await installFromMultiplePaths(api, uniquePakRoots, files);
     }
-    let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
-    if (Features.readmesEnabled(api.getState()) && !unrealResult) {
+    let instructions = installInstructions;
+    // let instructions = installInstructions.concat(getSlots(installInstructions, destinationPath) ?? []);
+    if (Features.readmesEnabled(api.getState())) {
         instructions = instructions.concat(getReadme(files, destinationPath) ?? []);
     }
     instructions = instructions.concat(getPaks(installInstructions) ?? []);

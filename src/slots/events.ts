@@ -1,5 +1,5 @@
 import { IDeployedFile, IExtensionApi, IMod } from "vortex-api/lib/types/api";
-import { util, selectors, fs, actions } from "vortex-api";
+import { util, selectors, fs, actions, log } from "vortex-api";
 import { GAME_ID, ModList, MOD_FILE_EXT } from "..";
 import { SlotReader } from ".";
 import path = require("path");
@@ -83,22 +83,23 @@ function removeNonConflicts(slots: SlotList) {
 }
 
 export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boolean = true) {
+    // log('debug', 'updating skin slots for mods', {mods: mods.length, replace});
     var reader = new SlotReader();
     var installedMods = mods
         .filter(m => m !== undefined && m !== null && m)
         .filter(m => m.state == 'installed')
         .filter(m => m.installationPath);
     for (const mod of installedMods) {
+        var existingSkins = util.getSafe(mod.attributes, ['skinSlots'], undefined);
+        if (existingSkins !== undefined && !replace) {
+            continue;
+        }
         const stagingPath: string = selectors.installPath(api.getState());
         var modPath = path.join(stagingPath, mod.installationPath);
         var files = (await nfs.promises.readdir(modPath, {withFileTypes: true}))
             .filter(de => de.isFile() && path.extname(de.name) == MOD_FILE_EXT)
             .map(den => path.join(modPath, den.name));
         if (files) {
-            var existingSkins = util.getSafe(mod.attributes, ['skinSlots'], undefined);
-            if (existingSkins !== undefined && !replace) {
-                return;
-            }
             var slots = files
                 .map(fi => {
                     var ident = reader.getSkinIdentifier(fi);

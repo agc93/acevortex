@@ -1,6 +1,6 @@
 import path = require('path');
 import { fs, log, util, selectors } from "vortex-api";
-import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile, ITestResult } from 'vortex-api/lib/types/api';
+import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile, ITestResult, IModTable } from 'vortex-api/lib/types/api';
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
 import { isGameManaged } from "./util";
@@ -61,6 +61,9 @@ function main(context: IExtensionContext) {
             }
             return Promise.resolve();
         });
+        context.api.onStateChange(
+            ['persistent', 'mods'],
+            onModsChanged(context.api));
         /* context.api.events.on('mods-enabled', (modIds: string[], enabled: boolean, gameMode: string) => {
             if (isActiveGame(context.api, GAME_ID)) {
                 refreshSkins(modIds, false);
@@ -140,6 +143,39 @@ async function installContent(api: IExtensionApi, files: string[], destinationPa
     } else {
         return advancedInstall(api, files, destinationPath, gameId, progress);
     }
+}
+
+function onModsChanged(api: IExtensionApi) {
+    if (!isActiveGame(api, GAME_ID)) {
+        return;
+    }
+    let lastModTable = api.store.getState().persistent.mods;
+    log('debug', 'scheduling skin update on mods changed')
+
+    const updateDebouncer: util.Debouncer = new util.Debouncer(
+        (newModTable: IModTable) => {
+            if ((lastModTable === undefined) || (newModTable === undefined)) {
+                return;
+            }
+            const state = api.store.getState();
+            // ensure anything changed for the actiave game
+            if ((lastModTable[GAME_ID] !== newModTable[GAME_ID])
+                && (lastModTable[GAME_ID] !== undefined)
+                && (newModTable[GAME_ID] !== undefined)) {
+                var newIds = Object.keys(newModTable[GAME_ID]).filter(x => !Object.keys(lastModTable[GAME_ID]).includes(x));
+                if (!newIds || newIds.length == 0) {
+                    return Promise.resolve();
+                }
+                log('debug', 'invoking AC slot updates', { newIds })
+                return updateSlots(api, newIds.map(i => newModTable[GAME_ID][i]), false);
+            }
+        }, 5000);
+
+    // we can't pass oldValue to the debouncer because that would only include the state
+    // for the last time the debouncer is triggered, missing all other updates
+    return (oldValue: IModTable, newValue: IModTable) =>
+        updateDebouncer.schedule((err: Error) => log('debug', 'Updated skin slots for AC7 mods', { err }), newValue);
+
 }
 
 module.exports = {
