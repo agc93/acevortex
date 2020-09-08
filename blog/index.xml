@@ -1,4 +1,26 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 1.4 Release</title><link>/blog/2020/08/26/alpha-1.4-release/</link><pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate><guid>/blog/2020/08/26/alpha-1.4-release/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 1.5 Release</title><link>/blog/2020/09/08/alpha-1.5-release/</link><pubDate>Tue, 08 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/08/alpha-1.5-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is a minor upgrade on the &lt;a href="../updates/v0.1.4">previous alpha&lt;/a> with some minor fixes:&lt;/p>
+&lt;ul>
+&lt;li>Vortex will now fix/rename older mod files more reliably
+&lt;ul>
+&lt;li>While &lt;a href="(/updates/v0.1.4)">0.1.4&lt;/a> would rename most files, it would not rename mods only containing one pak file. This has now been fixed!&lt;/li>
+&lt;li>Thanks to @Azekthi for reporting this &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Skin detection now happens when any mod is installed rather than as part of the advanced installer
+&lt;ul>
+&lt;li>Among other things, this means mods with FOMODs will still have skins detected automatically.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Some more minor bugfixes and refactoring in preparation for some planned features&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>All of the automatic skin slot features are a) very new and potentially not 100% stable and b) not guaranteed to work. Depending on how the mod was packed, we might not be able to auto-detect the slot and you will have to keep track of those mods yourself.&lt;/p>
+&lt;/blockquote>
+&lt;p>As always, please report any issues you find &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>. If things go really awry, you can also turn off the new installer in the Settings page and see if that resolves any issues you&amp;rsquo;re facing during installation&lt;/p></description></item><item><title>Blog: Alpha 1.4 Release</title><link>/blog/2020/08/26/alpha-1.4-release/</link><pubDate>Wed, 26 Aug 2020 00:00:00 +0000</pubDate><guid>/blog/2020/08/26/alpha-1.4-release/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
 &lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
 &lt;/div>
