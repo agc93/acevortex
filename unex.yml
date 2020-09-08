@@ -1,0 +1,11 @@
+
+Game: site
+ModId: 125
+FileName: AC7 Support for Vortex
+PreviousFile: auto
+FileDescription: |-
+  Download and install using the Extensions pane in Vortex.
+
+  To manually install, extract the zip to %APPDATA%\Vortex\plugins\game-acecombat7skiesunknown.
+
+  Read about the changes in this release at ac7.vortex.support/updates/
