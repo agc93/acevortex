@@ -97,7 +97,7 @@ export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boo
         const stagingPath: string = selectors.installPath(api.getState());
         var modPath = path.join(stagingPath, mod.installationPath);
         var files = (await nfs.promises.readdir(modPath, {withFileTypes: true}))
-            .filter(de => de.isFile() && path.extname(de.name) == MOD_FILE_EXT)
+            .filter(de => de.isFile() && path.extname(de.name).toLowerCase() == MOD_FILE_EXT)
             .map(den => path.join(modPath, den.name));
         if (files) {
             var slots = files
