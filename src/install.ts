@@ -123,7 +123,7 @@ function buildFlatInstructions(api: IExtensionApi, files: string[], rootPath: st
     const instructions = filtered.map(file => {
         // const destination = file.substr(firstType.indexOf(path.basename(root)) + root.length).replace(/^\\+/g, '');
         var destination = rootPath == '.' ? file : path.join(file.substr(file.indexOf(rootPath) + rootPath.length + 1));
-        if (path.extname(destination) == MOD_FILE_EXT && !destination.endsWith('_P.pak')) {
+        if (path.extname(destination).toLowerCase() == MOD_FILE_EXT && !destination.endsWith('_P.pak')) {
             if (Features.isRenamingEnabled(api.getState())) {
                 log('debug', 'detected non-suffixed PAK file!', {destination});
                 destination = destination.replace('.pak', '_P.pak');
@@ -162,28 +162,9 @@ function buildInstructions(files: string[], modFile: string, sourceFilter?: (sou
     return instructions;
 }
 
-function getSlots(instructions: IInstruction[], destinationPath: string): IInstruction[] {
-    var reader = new SlotReader();
-    let attrs: IInstruction[] = [];
-    var idents = instructions
-        .filter(i => path.extname(i.source) == MOD_FILE_EXT)
-        .map((pf: IInstruction) => {
-            var ident = reader.getSkinIdentifier(path.join(destinationPath, pf.source));
-            if (ident) {
-                return ident;
-            }
-            return null;
-        })
-        .filter(pfi => pfi != null && pfi != undefined);
-    if (idents) {
-        attrs.push({ type: 'attribute', key: 'skinSlots', value: [...new Set(idents.map(i => `${i.aircraft}|${i.slot}`))] as any});
-    }
-    return attrs;
-}
-
 function getPaks(instructions: IInstruction[]): IInstruction[] {
     var paks = instructions
-        .filter(i => path.extname(i.source) == MOD_FILE_EXT)
+        .filter(i => path.extname(i.source).toLowerCase() == MOD_FILE_EXT)
         .map(pf => pf.source);
     if (paks) {
         return [
