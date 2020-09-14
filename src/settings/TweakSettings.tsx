@@ -7,7 +7,7 @@ import { Toggle, ComponentEx, More, util, tooltip, actions as act } from 'vortex
 import { IState, DialogType, IDialogContent, DialogActions, IErrorOptions } from 'vortex-api/lib/types/api';
 const { HelpBlock, FormGroup, ControlLabel } = require('react-bootstrap');
 import { getUserConfigPath } from "../util";
-import { applyTextureFix } from '../tweaks';
+import { applyTextureFix, applyGraphicsTweak } from '../tweaks';
 
 interface IBaseProps {
     t: any
@@ -50,6 +50,20 @@ class GeneralSettings extends ComponentEx<IProps, {}> {
                             {t('Attempt Patch')}
                         </tooltip.Button>
                     </div>
+                    <div>
+                        {t('Texture Graphics Improvements')}
+                        <More id='more-ac7-texture-tweak' name={t('Texture Graphics Improvements')}>
+                            {t("More generally than the specific bug above, there's a number of tweaks you can apply to the engine configuration file to improve overall graphics. This might hurt your performance!")}
+                        </More>
+                        <tooltip.Button
+                            tooltip={t('Patch')}
+                            id='ac7-graphics-fix'
+                            onClick={this.graphicsTweak}
+                            style={{ marginLeft: 5 }}
+                        >
+                            {t('Apply Tweaks')}
+                        </tooltip.Button>
+                    </div>
                 </FormGroup>
             </form>
         );
@@ -66,33 +80,56 @@ class GeneralSettings extends ComponentEx<IProps, {}> {
             { label: 'Cancel' },
             {
               label: 'Continue', action: () => {
-                applyTextureFix(config)
-                  .then((changed: boolean) => {
-                    if (changed) {
-                      onDialog('success', 'Success', {
-                        text: 'Fix was applied.',
-                      }, [ { label: 'Close' } ]);
-                    } else {
-                      onDialog('info', 'Nothing Changed', {
-                        text: 'No change was necessary.',
-                      }, [ { label: 'Close' } ]);
-                    }
-                  })
-                  .catch(err => {
-                    if (err.code === 'ENOENT') {
-                      onShowError(
-                        'Failed to apply configuration tweak',
-                        'Could not locate or open your engine configuration file',
-                        { allowReport: false },
-                      );
-                    } else {
-                      onShowError('Failed to apply configuration tweak. ', err,
-                                  { allowReport: false });
-                    }
-                  });
+                this.applyFix(config, applyTextureFix);
               },
             },
         ]);
+      }
+
+      private graphicsTweak = () => {
+        const { onDialog, onShowError } = this.props;
+        var config = getUserConfigPath();
+        onDialog('info', 'Applying Engine Configuration', {
+            htmlText: '<p>If you are seeing blurry textures in-game (especially with custom skins), it <em>might</em> help to changes some settings in your engine configuration.</p><br/>'
+                        + '<p>This tweak will change a handful of engine settings to improve texture loading, and other graphics options in your <code>Engine.ini</code> file.</p><br/>'
+                        + "<p>This tweak can also hurt your game's performance, especially the framerate.</p><br/>"
+                        + `<p>This process will attempt to find and modify the configuration file at <code>${config}</code></p>`
+            }, [
+            { label: 'Cancel' },
+            {
+              label: 'Continue', action: () => {
+                this.applyFix(config, applyGraphicsTweak);
+              },
+            },
+        ]);
+      }
+
+      private applyFix(configFile: string, fixFn: (config: string) => Promise<boolean>) {
+        const { onDialog, onShowError } = this.props;
+        fixFn(configFile)
+          .then((changed: boolean) => {
+            if (changed) {
+              onDialog('success', 'Success', {
+                text: 'Fix was applied.',
+              }, [{ label: 'Close' }]);
+            } else {
+              onDialog('info', 'Nothing Changed', {
+                text: 'No change was necessary.',
+              }, [{ label: 'Close' }]);
+            }
+          })
+          .catch(err => {
+            if (err.code === 'ENOENT') {
+              onShowError(
+                'Failed to apply configuration tweak',
+                'Could not locate or open your engine configuration file',
+                { allowReport: false },
+              );
+            } else {
+              onShowError('Failed to apply configuration tweak. ', err,
+                { allowReport: false });
+            }
+          });
       }
 }
 
