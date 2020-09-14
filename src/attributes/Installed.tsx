@@ -7,6 +7,7 @@ const { Overlay, Popover } = require('react-bootstrap');
 
 interface IInstalledProps {
     mod: types.IMod;
+    direction?: 'left'|'top'|'right'|'bottom';
     t: TFunction;
 }
 
@@ -30,6 +31,7 @@ class InstalledPaks extends ComponentEx<IInstalledProps, IComponentState> {
         const IconX: any = tooltip.Icon;
         var content: JSX.Element | JSX.Element[];
         var installedFiles = util.getSafe(mod.attributes, ['installedPaks'], []) as string[];
+        var direction = this.props.direction ?? 'left';
         if (installedFiles.length == 0) {
             content = <div></div>
         } else {
@@ -47,7 +49,7 @@ class InstalledPaks extends ComponentEx<IInstalledProps, IComponentState> {
                 <div>
                     <Overlay
                         rootClose
-                        placement='left'
+                        placement={direction}
                         onHide={this.hide}
                         show={this.state.open}
                         target={this.getRef}

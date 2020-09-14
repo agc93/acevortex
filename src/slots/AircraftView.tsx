@@ -8,7 +8,7 @@ import React, { Component } from 'react';
 
 import { GAME_ID } from "..";
 import LoadingSpinner from "./LoadingSpinner";
-import { getSlotName, getSkinName as getAllSkins } from "../attributes";
+import { getSlotName, getSkinName as getAllSkins, getAircraftName, InstalledPaks } from "../attributes";
 
 type SkinSet = {[aircraft: string]: {[slot: string]: IMod[]}};
 type AircraftSet = {[aircraft: string]: IMod[]};
@@ -123,7 +123,11 @@ class AircraftView extends ComponentEx<IProps, {}> {
                 data-slot={slot}
                 className="av-slot-item"
             >
-                <div className='av-item-header'>
+                <FlexLayout type="row">
+                    <FlexLayout.Flex fill={true} className='av-slot-details'>
+                        <FlexLayout type='column'>
+                            <FlexLayout.Fixed>
+                            <div className='av-item-header'>
                     <div>
                         <span className='av-mod-name'>{getSlotName(slot)}: {mods.length} conflicting mods</span>
                     </div>
@@ -131,17 +135,25 @@ class AircraftView extends ComponentEx<IProps, {}> {
                         <span className='av-slot-name' style={{color: 'red'}}>{getSlotName(slot)}</span>
                     </div>
                 </div>
-                {mods.map(m => {
+                            </FlexLayout.Fixed>
+                        <FlexLayout.Flex fill={true}>
+                        {mods.map(m => {
                         return (
                             <div className='av-item-footer'>
                                 <div className='av-item-footer-text'><span style={{fontStyle: 'italic'}}>{getModName(m)}</span>: Replaces {getAllSkins(m)}</div>
                             </div>
                         )})}
+                        </FlexLayout.Flex>
+                        </FlexLayout>
+                    </FlexLayout.Flex>
+                </FlexLayout>
+                
             </ListGroupItem>
         )
     }
 
     private renderSlotDetail = (slot: string, mod: IMod) => {
+        const { api } = this.props;
         var homeLink = util.getSafe(mod.attributes, ['homepage'], undefined);
         var isNexus = util.getSafe(mod.attributes, ['source'], undefined) === 'nexus';
         const url = util.getSafe(mod, ['attributes', 'pictureUrl'], undefined);
@@ -150,12 +162,12 @@ class AircraftView extends ComponentEx<IProps, {}> {
                 key={`${mod.id}-${slot}`}
                 data-slot={slot}
                 className={"av-slot-item"}
-            // active={aircraft == selectedAircraft}
-            // onClick={(e: React.MouseEvent<any, MouseEvent>) => this.selectAircraftEntry(e, aircraft)}
             >
                 <FlexLayout type="row">
                     <FlexLayout.Flex fill={true} className='av-slot-details'>
-                        <div className='av-item-header'>
+                        <FlexLayout type='column'>
+                            <FlexLayout.Fixed>
+                            <div className='av-item-header'>
                             <div>
                                 <span className='av-mod-name'>{getModName(mod)}</span> by {util.getSafe(mod.attributes, ['author'], 'unknown')}
                             </div>
@@ -163,15 +175,22 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                 <span className='av-slot-name'>{getSlotName(slot)}</span>
                             </div>
                         </div>
+                            </FlexLayout.Fixed>
+                        <FlexLayout.Flex fill={true}>
                         <div className='av-item-footer'>
                             <div className='av-item-footer-text'>{util.getSafe(mod.attributes, ['shortDescription'], '')}</div>
                         </div>
+                        <InstalledPaks direction='right' mod={mod} t={api.translate} />
+                        </FlexLayout.Flex>
+                        <FlexLayout.Fixed>
                         <div className='av-item-actions'>
                             <Button onClick={(e => this.highlightMod(mod.id))}>View in Mods List</Button>
                             {homeLink && isNexus &&
                                 <Button onClick={(e => util.opn(homeLink))}>{"View on Nexus Mods"}</Button>
                             }
                         </div>
+                        </FlexLayout.Fixed>
+                        </FlexLayout>
                     </FlexLayout.Flex>
                     <FlexLayout.Fixed className='av-slot-image'>
                         {this.renderImage(url)}
@@ -208,10 +227,6 @@ class AircraftView extends ComponentEx<IProps, {}> {
         }, 500);
       }
 
-    private getAircraftName = (aircraft: string) => {
-        return aircraft.toUpperCase();
-    }
-
     renderAircraftEntry = (aircraft: string) => {
         const { selectedAircraft } = this.state;
         return (
@@ -224,7 +239,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
             >
                 <div className='av-item-header'>
                     <div>
-                        <span className='sv-item-title'>{this.getAircraftName(aircraft)}</span>
+                        <span className='sv-item-title'>{aircraft}</span>
                     </div>
                 </div>
                 <div className='av-item-footer'>
@@ -251,6 +266,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
                 skins.forEach(sk => {
                     // If the key doesn't exist yet, create it
                     var aircraft = sk.split('|')[0];
+                    aircraft = getAircraftName(aircraft);
                     var slot = sk.split('|')[1];
                     if (!slots.hasOwnProperty(aircraft)) {
                         slots[aircraft] = {};
@@ -266,7 +282,11 @@ class AircraftView extends ComponentEx<IProps, {}> {
         }, slots);
         var ordered: SkinSet = {};
         Object.keys(allSlots).sort().forEach(function(key) {
-            ordered[key] = allSlots[key];
+            var orderedAircraft = {};
+            Object.keys(allSlots[key]).sort().forEach(function(k) {
+                orderedAircraft[k] = allSlots[key][k];
+            });
+            ordered[key] = orderedAircraft;
           });
         return ordered;
         // return removeNonConflicts(allSlots);

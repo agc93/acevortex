@@ -29,9 +29,29 @@ const slotNames = {
     "03": "Mage",
     "04": "Spare",
     "05": "Strider",
-    "06": "Slot 7",
-    "07": "Slot 8"
+    // "06": "Slot 7 (DLC)",
+    // "07": "Slot 8 (DLC)"
 };
+
+/**
+ * For anyone who comes looking, this is *deliberately* covering as **few** cases as possible.
+ * Given we are not validating this in the base game, we only want to cover objectively confusing cases here.
+ */
+const specialAircraftNames = {
+    "a10a": "A-10C",
+    "f18f": "F/A-18F",
+    "f104av": "Avril F-104",
+    "m21b": "MiG-21",
+    "m29a": "MiG-29",
+    "m31b": "MiG-31",
+    "mr2k": "Mirage",
+    "mrgn": "ADFX-01",
+    "pkfa": "Su-57",
+    "rflm": "Rafale M",
+    "su30": "SU-30M2", //this is capitalised to match the fallback behaviour
+    "typn": "Typhoon",
+    "zoef": "ADF-01"
+}
 
 export function getSlotName(slotIdent: string) {
     var knownName = slotNames[slotIdent];
@@ -40,8 +60,19 @@ export function getSlotName(slotIdent: string) {
     } else {
         return /[a-z]/.test(slotIdent)
             ? `NPC ${slotIdent}`
-            : `0${Number.parseInt(slotIdent) + 1}`;
+            : ` Slot ${Number.parseInt(slotIdent, 10) + 1} ⭐`;
     }
+}
+export function getAircraftName(aircraftIdent: string): string {
+    var knownName = specialAircraftNames[aircraftIdent];
+    if (knownName) {
+        return knownName;
+    } else {
+        var basicName = aircraftIdent.toUpperCase();
+        var firstNum = basicName.replace(/(\d+)/g, '-$&');
+        return firstNum;
+    }
+    
 }
 
 export function getSkinName (mod: IMod) {

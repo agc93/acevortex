@@ -42,7 +42,9 @@
     align-items: flex-start;
     justify-content: flex-start;
     // overflow-y: hidden; //this is a huge hack for the fact that I cannot get images to layout properly
-
+    .av-slot-details {
+        padding: 0.5em;
+    }
     .av-slot-name {
         font-weight: bold;
         font-size: large;
@@ -60,7 +62,7 @@
     }
 
     .av-item-actions {
-        align-self: flex-end;
+        float: right;
     }
 }
 
@@ -77,13 +79,9 @@
     align-items: center;
     // white-space: nowrap;
     > img {
-        // position: absolute;
-        // top: 0;
-        // bottom: 0;
-        // left: 0;
-        // right: 0;
-        // margin: auto;
-        // align-self: flex-end;
+        object-fit: contain;
+        max-height: 100%; //images seem to just do whatever the fuck they feel like without this
+        max-width: 100%;
     }
 }
 
