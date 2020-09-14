@@ -5,7 +5,7 @@ import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common
 
 import { isGameManaged } from "./util";
 import { GeneralSettings, settingsReducer, TweakSettings, Features } from "./settings";
-import { checkForConflicts, updateSlots } from "./slots";
+import { checkForConflicts, updateSlots, AircraftView } from "./slots";
 import { advancedInstall } from "./install";
 import { tableAttributes, getSkinName, installedFilesRenderer } from "./attributes";
 
@@ -46,6 +46,7 @@ function main(context: IExtensionContext) {
     context.registerSettings('Workarounds', TweakSettings, () => {t: context.api.translate}, isAceCombatManaged, 101);
     context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
+        context.api.setStylesheet('av-common', path.join(__dirname, 'acevortex.scss'));
         try {
             var langContent = fs.readFileSync(path.join(__dirname, 'language.json'), {encoding: 'utf-8'});
             context.api.getI18n().addResources('en', I18N_NAMESPACE, JSON.parse(langContent));
@@ -117,6 +118,14 @@ function main(context: IExtensionContext) {
         ...tableAttributes.skins,
         calc: (mod: IMod) => getSkinName(mod),
         condition: () => selectors.activeGameId(context.api.getState()) === GAME_ID,
+    });
+
+    context.registerMainPage('aircraft', 'Skins', AircraftView, {
+        group: 'per-game',
+        visible: () => {
+            return (isActiveGame(context.api, GAME_ID))
+        },
+        props: () => ({api: context.api})
     });
 
     return true

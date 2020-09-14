@@ -33,7 +33,7 @@ const slotNames = {
     "07": "Slot 8"
 };
 
-function getSlotName(slotIdent: string) {
+export function getSlotName(slotIdent: string) {
     var knownName = slotNames[slotIdent];
     if (knownName) {
         return knownName;

@@ -1,0 +1,124 @@
+@mixin vertical-list {
+    max-width: 40%;
+    min-width: 20%;
+    margin-right: 4px;
+    border-right: $border-width solid $border-color;
+    overflow: auto;
+}
+
+.av-item-text {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.av-aircraftlist {
+    @include vertical-list;
+
+    .list-group {
+        overflow-y: auto;
+    }
+}
+
+.av-slotlist {
+    @include vertical-list;
+    max-width: 100%;
+
+    .list-group {
+        overflow-y: auto;
+    }
+}
+
+//base class only
+
+.av-aircraft-item {
+    @extend %av-item;
+}
+
+.av-slot-item {
+    @extend %av-item;
+    height: 156px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    // overflow-y: hidden; //this is a huge hack for the fact that I cannot get images to layout properly
+
+    .av-slot-name {
+        font-weight: bold;
+        font-size: large;
+        margin-bottom: 4px;
+    }
+
+    .av-mod-name {
+        font-weight: bold;
+        margin-bottom: 4px;
+        font-size: large;
+    }
+
+    .av-slot-conflict {
+        color: darkred;
+    }
+
+    .av-item-actions {
+        align-self: flex-end;
+    }
+}
+
+.av-skin-preview {
+    width: 256px; // this is also a huge hack
+    // height: 128px;
+    height: 100%;
+    // text-align: right;
+    position: relative;
+    // margin: 6px 20px;
+    padding: 4px 6px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    // white-space: nowrap;
+    > img {
+        // position: absolute;
+        // top: 0;
+        // bottom: 0;
+        // left: 0;
+        // right: 0;
+        // margin: auto;
+        // align-self: flex-end;
+    }
+}
+
+%av-item {
+    &.selected {
+        background-color: $table-bg-active;
+    }
+
+    .av-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        flex-wrap: nowrap;
+        overflow: hidden;
+        flex: 1 1 0;
+
+        .av-item-title {
+            @extend .av-item-text;
+            font-weight: bolder;
+        }
+
+        .av-item-extra {
+            opacity: 0.9;
+            font-size: smaller;
+            padding-left: 6px;
+        }
+    }
+
+    .av-item-footer {
+        display: flex;
+        justify-content: space-between;
+
+        .av-item-footer-text {
+            @extend .av-item-text;
+            // font-weight: bold;
+        }
+    }
+}
