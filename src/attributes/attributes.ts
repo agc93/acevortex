@@ -78,6 +78,6 @@ export function getAircraftName(aircraftIdent: string): string {
 export function getSkinName (mod: IMod) {
     return util.getSafe<string[]>(mod.attributes, ['skinSlots'], [])
         .map(sl => sl.split('|'))
-        .map(segs => `${segs[0].toUpperCase()} (${getSlotName(segs[1])})`)
+        .map(segs => `${getAircraftName(segs[0])} (${getSlotName(segs[1])})`)
         .join(', ');
 }
