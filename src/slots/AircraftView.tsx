@@ -2,7 +2,7 @@ import { IMod, IExtensionApi, IState, IProfile, IProfileMod } from "vortex-api/l
 import { ComponentEx, util, MainPage, FlexLayout, selectors, Icon, log } from "vortex-api";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
-import { Panel, ListGroup, ListGroupItem, Button, Image } from "react-bootstrap";
+import { Panel, ListGroup, ListGroupItem, Button, Image, Checkbox, CheckboxProps } from "react-bootstrap";
 import { getModName } from "vortex-ext-common";
 import React, { Component } from 'react';
 
@@ -27,6 +27,7 @@ interface IAircraftViewState {
     isLoading: boolean;
     selectedAircraft: string;
     selectedSlot: string;
+    includeNpc: boolean;
 }
 
 type IProps = IConnectedProps & IBaseProps;
@@ -38,7 +39,8 @@ class AircraftView extends ComponentEx<IProps, {}> {
     state: IAircraftViewState = {
         isLoading: false,
         selectedAircraft: undefined,
-        selectedSlot: undefined
+        selectedSlot: undefined,
+        includeNpc: true
     };
 
     private getEnabledSkinMods = (): IMod[] => {
@@ -53,7 +55,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
     }
 
     public render() {
-        const { isLoading, selectedAircraft } = this.state;
+        const { isLoading, selectedAircraft, includeNpc } = this.state;
         const { installed } = this.props;
         var skinMods = this.getEnabledSkinMods();
         var groupedSkins = this.buildSkinSet(skinMods);
@@ -72,7 +74,12 @@ class AircraftView extends ComponentEx<IProps, {}> {
                         : <Panel id="skins-browse">
                             <Panel.Heading>
                                 <FlexLayout type="row" className="av-actions-bar">
-                                    <>This will only show enabled skins that you have installed with Vortex and will not include manually installed skins or skins included with the game/DLC</>
+                                    <FlexLayout.Flex fill={true}>
+                                        <>This will only show enabled skins that you have installed with Vortex and will not include manually installed skins or skins included with the game/DLC</>
+                                    </FlexLayout.Flex>
+                                    <FlexLayout.Fixed>
+                                    <Checkbox checked={includeNpc} style={{float: 'right'}} onChange={this.toggleNpcs}>Include NPC slots</Checkbox>
+                                    </FlexLayout.Fixed>
                                 </FlexLayout>
                             </Panel.Heading>
                             <Panel.Body>
@@ -102,9 +109,15 @@ class AircraftView extends ComponentEx<IProps, {}> {
         )
     }
 
+    private toggleNpcs = (evt: React.FormEvent<Checkbox>) => {
+        this.setState({includeNpc: (evt.target as any).checked} as IAircraftViewState);
+    }
+
     private renderSlots = (slots: {[slot:string]: IMod[]}) => {
+        const { includeNpc } = this.state;
         var content: JSX.Element[] = [];
-        for (const slot of Object.keys(slots)) {
+        var allSlots = includeNpc ? Object.keys(slots) : Object.keys(slots).filter(s => !(/[a-z]/.test(s)));
+        for (const slot of allSlots) {
             var slotMods = slots[slot];
             if (slotMods.length == 1) {
                 content.push(this.renderSlotDetail(slot, slotMods[0]));
@@ -281,9 +294,21 @@ class AircraftView extends ComponentEx<IProps, {}> {
             return slots;
         }, slots);
         var ordered: SkinSet = {};
+        let sortSlot = (a: string, b: string): number => {
+            const isNpc = (a: string): boolean => {
+                return /[a-z]/.test(a)
+            }
+            if (isNpc(a) && !isNpc(b)) {
+                return 1;
+            } else if (!isNpc(a) && isNpc(b)) {
+                return -1;
+            } else {
+                return a.localeCompare(b);
+            }
+        }
         Object.keys(allSlots).sort().forEach(function(key) {
             var orderedAircraft = {};
-            Object.keys(allSlots[key]).sort().forEach(function(k) {
+            Object.keys(allSlots[key]).sort(sortSlot).forEach(function(k) {
                 orderedAircraft[k] = allSlots[key][k];
             });
             ordered[key] = orderedAircraft;

@@ -26,6 +26,9 @@ export class SlotReader {
                     var matches = pattern.exec(rawString);
                     // log('debug', 'key string matched pattern', {matches});
                     var [, aircraft, slot, skinType] = matches;
+                    if (skinType.includes('MREC')) {
+                        return;
+                    }
                     return {aircraft, slot};
                 }
             } else {
