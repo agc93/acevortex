@@ -1,4 +1,26 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 2 Release</title><link>/blog/2020/09/16/alpha-2-release/</link><pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/16/alpha-2-release/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – Updates</title><link>/blog/</link><description>Recent content in Updates on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 2.1 Release</title><link>/blog/2020/09/21/alpha-2.1-release/</link><pubDate>Mon, 21 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/21/alpha-2.1-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is a minor update on the &lt;a href="../updates/v0.2.0">previous big alpha&lt;/a> with some smaller fixes. If you haven&amp;rsquo;t read the notes for the last release, please check them out! This fix release adds the following tweaks:&lt;/p>
+&lt;ul>
+&lt;li>NPC Skins handled much better
+&lt;ul>
+&lt;li>NPC skins will now be sorted to the bottom of the skin list for each aircraft so you can focus on your playable skins&lt;/li>
+&lt;li>You can also hide NPC skins from the skin view using the &amp;ldquo;Include NPC slots&amp;rdquo; checkbox at the top of the page&lt;/li>
+&lt;li>Hiding NPC slots won&amp;rsquo;t remove them or skip conflict detection, it will just hide the entries in the skin list&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Some more improvements to skin detection
+&lt;ul>
+&lt;li>Added a minor fix for an edge case we hadn&amp;rsquo;t accounted for (thanks Sly!)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>All of the automatic skin slot features are a) very new and potentially not 100% stable and b) not guaranteed to work. Depending on how the mod was packed, we might not be able to auto-detect the slot and you will have to keep track of those mods yourself.&lt;/p>
+&lt;/blockquote>
+&lt;p>As always, please report any issues you find &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>. If things go really awry, you can also turn off the new installer in the Settings page and see if that resolves any issues you&amp;rsquo;re facing during installation&lt;/p></description></item><item><title>Blog: Alpha 2 Release</title><link>/blog/2020/09/16/alpha-2-release/</link><pubDate>Wed, 16 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/16/alpha-2-release/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
 &lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
 &lt;/div>
