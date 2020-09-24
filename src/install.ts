@@ -16,6 +16,17 @@ export async function advancedInstall(api: IExtensionApi, files: string[], desti
     });
     let installInstructions: IInstruction[] = [];
     var keys = Object.keys(uniquePakRoots);
+    /* if (allPaks.length > 100 || keys.length > 9 ) {
+        var confirmResult: IDialogResult = await api.showDialog('info', 'Large mod detected!', {
+            text: largeModWarningText
+        }, [
+            {label: 'Cancel'},
+            {label: 'Continue'}
+        ]);
+        if (confirmResult.action == 'Cancel') {
+            return Promise.reject();
+        }
+    } */
     log('debug', 'separated pak roots', {roots: keys});
     if (!uniquePakRoots || keys.length == 0) {
         log('warn', "Couldn't find reliable root indicator in file list!");
@@ -197,3 +208,5 @@ function getReadme(files: string[], destinationPath: string) : IInstruction[] {
         return [];
     }
 }
+
+const largeModWarningText: string = "The mod you're trying to install includes a large number of available files and no installer files!\n\nVortex will prompt you for which files you want to install but be aware that this mod archive might contain a lot of files and folders to choose from. You may want to check the mod's description in case there are any special installation instructions you should know about.\n\nThere's unfortunately nothing Vortex can do about this as this can only be resolved by the mod author.";

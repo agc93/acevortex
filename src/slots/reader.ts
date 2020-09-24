@@ -22,7 +22,8 @@ export class SlotReader {
                 // log('debug', 'found key in pak file', {key, rawString}); //TODO: remove
                 // var pattern = new RegExp(/([a-z0-9]+?)_(v?\d+a?\w{1}?)_(\w).*/);
                 var pattern = new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Z]{1}|[A-Za-z]{4})(?:[^\w])(?!ue)/);
-                if (pattern.test(rawString)) {
+                // var pattern = new RegExp(/\/([a-zA-Z0-9]{2,}?)_x?(\d*\w*)_([A-Z]{1}|[A-Za-z]{4})(?:[^\w])(?!ue)/); //this will not match weapons
+                if (pattern.test(rawString) && rawString.includes('Aircraft')) {
                     var matches = pattern.exec(rawString);
                     // log('debug', 'key string matched pattern', {matches});
                     var [, aircraft, slot, skinType] = matches;
