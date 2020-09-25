@@ -61,18 +61,21 @@ class AircraftView extends ComponentEx<IProps, {}> {
         var groupedSkins = this.buildSkinSet(skinMods);
         return (
             <MainPage>
-                {/* <MainPage.Header>
-                    {installed && 
-                    <FlexLayout type="column">
-                        <>This will only show skins that you have installed with Vortex and will not include manually installed skins or skins included with the game/DLC</>
+                <MainPage.Header>
+                    <FlexLayout type="row" className="av-actions-bar">
+                        <FlexLayout.Flex fill={true}>
+                            <>This will only show enabled skins that you have installed with Vortex and will not include manually installed skins or skins included with the game/DLC</>
+                        </FlexLayout.Flex>
+                        <FlexLayout.Fixed>
+                            <Checkbox checked={includeNpc} style={{ float: 'right' }} onChange={this.toggleNpcs}>Include NPC slots</Checkbox>
+                        </FlexLayout.Fixed>
                     </FlexLayout>
-                    }
-                </MainPage.Header> */}
+                </MainPage.Header>
                 <MainPage.Body>
                     {isLoading
                         ? <LoadingSpinner />
                         : <Panel id="skins-browse">
-                            <Panel.Heading>
+                            {/* <Panel.Heading>
                                 <FlexLayout type="row" className="av-actions-bar">
                                     <FlexLayout.Flex fill={true}>
                                         <>This will only show enabled skins that you have installed with Vortex and will not include manually installed skins or skins included with the game/DLC</>
@@ -81,7 +84,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                     <Checkbox checked={includeNpc} style={{float: 'right'}} onChange={this.toggleNpcs}>Include NPC slots</Checkbox>
                                     </FlexLayout.Fixed>
                                 </FlexLayout>
-                            </Panel.Heading>
+                            </Panel.Heading> */}
                             <Panel.Body>
                                 <FlexLayout type="row">
                                     <FlexLayout.Fixed className="av-aircraftlist">
@@ -95,11 +98,28 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                         </FlexLayout>
                                     </FlexLayout.Fixed>
                                     <FlexLayout.Flex fill={true} className="av-slotlist">
-                                        {selectedAircraft &&
-                                        <ListGroup>
-                                            {this.renderSlots(groupedSkins[selectedAircraft])}
-                                        </ListGroup>
-                                        }
+                                        <FlexLayout type="column">
+                                            <FlexLayout.Flex fill={true}>
+                                                {selectedAircraft &&
+                                                <ListGroup>
+                                                    {this.renderSlots(groupedSkins[selectedAircraft])}
+                                                </ListGroup>
+                                                }
+                                            </FlexLayout.Flex>
+                                            <FlexLayout.Fixed>
+                                                {selectedAircraft &&
+                                                <Button
+                                                    id='av-more-mods'
+                                                    onClick={this.searchAircraft}
+                                                    bsStyle='ghost'
+                                                    className='av-action-center'
+                                                    >
+                                                    {<Icon name='nexus'/>}
+                                                    {`Find more ${selectedAircraft} skins`}
+                                                </Button>
+                                                }
+                                            </FlexLayout.Fixed>
+                                        </FlexLayout>
                                     </FlexLayout.Flex>
                                 </FlexLayout>
                             </Panel.Body>
@@ -111,6 +131,11 @@ class AircraftView extends ComponentEx<IProps, {}> {
 
     private toggleNpcs = (evt: React.FormEvent<Checkbox>) => {
         this.setState({includeNpc: (evt.target as any).checked} as IAircraftViewState);
+    }
+
+    private searchAircraft = () => {
+        const { selectedAircraft } = this.state;
+        util.opn(`https://www.nexusmods.com/acecombat7skiesunknown/search/?gsearch=${selectedAircraft}`);
     }
 
     private renderSlots = (slots: {[slot:string]: IMod[]}) => {

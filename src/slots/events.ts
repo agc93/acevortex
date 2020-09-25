@@ -112,6 +112,11 @@ export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boo
                 .map(i => `${i.aircraft}|${i.slot}`);
             if (slots) {
                 api.store.dispatch(actions.setModAttribute(GAME_ID, mod.id, 'skinSlots', slots));
+            } else if (!slots && replace) {
+                // this is actually not an ideal scenario since a failed detection would completely erase a potentially valid one
+                // but given there's currently no way to reverse an incorrect detection, we basically need this
+                // in future, we might want to show a dialog before doing this
+                api.store.dispatch(actions.setModAttribute(GAME_ID, mod.id, 'skinSlots', []));
             }
         }
     }
