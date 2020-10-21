@@ -34,5 +34,5 @@ export function isGameManaged(api: IExtensionApi): boolean {
 }
 
 export function getUserConfigPath(configName?: string) {
-    return path.join(remote.app.getPath('home'), 'AppData', 'Local', 'BANDAI NAMCO Entertainment', 'ACE COMBAT 7', 'Config', configName ?? 'Engine.ini');
+    return path.join(remote.app.getPath('home'), 'AppData', 'Local', 'BANDAI NAMCO Entertainment', 'ACE COMBAT 7', 'Config', configName ?? '');
 }

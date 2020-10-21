@@ -6,6 +6,7 @@ import { withTranslation } from 'react-i18next';
 import { Toggle, ComponentEx, More, util, tooltip, actions as act } from 'vortex-api';
 import { IState, DialogType, IDialogContent, DialogActions, IErrorOptions } from 'vortex-api/lib/types/api';
 const { HelpBlock, FormGroup, ControlLabel } = require('react-bootstrap');
+import path from 'path';
 import { getUserConfigPath } from "../util";
 import { applyTextureFix, applyGraphicsTweak } from '../tweaks';
 
@@ -71,10 +72,10 @@ class GeneralSettings extends ComponentEx<IProps, {}> {
 
     private textureFix = () => {
         const { onDialog, onShowError } = this.props;
-        var config = getUserConfigPath();
+        var config = getUserConfigPath('Engine.ini');
         onDialog('info', 'Applying Engine Configuration', {
             htmlText: '<p>If you are seeing very blurry text in installed custom skins, it <em>might</em> help to changes some settings in your engine configuration.</p><br/>'
-                        + '<p>This tweak will change the <code>r.Streaming.FullyLoadUsedTextures</code> and <code>r.Streaming.UseAllMips</code> keys to true in your <code>Engine.ini</code> file.</p><br/>'
+                        + `<p>This tweak will change the <code>r.Streaming.FullyLoadUsedTextures</code> and <code>r.Streaming.UseAllMips</code> keys to true in your ${path.basename(config)} file.</p><br/>`
                         + `<p>This process will attempt to find and modify the configuration file at <code>${config}</code></p>`
             }, [
             { label: 'Cancel' },
@@ -88,10 +89,10 @@ class GeneralSettings extends ComponentEx<IProps, {}> {
 
       private graphicsTweak = () => {
         const { onDialog, onShowError } = this.props;
-        var config = getUserConfigPath();
+        var config = getUserConfigPath('Engine.ini');
         onDialog('info', 'Applying Engine Configuration', {
             htmlText: '<p>If you are seeing blurry textures in-game (especially with custom skins), it <em>might</em> help to changes some settings in your engine configuration.</p><br/>'
-                        + '<p>This tweak will change a handful of engine settings to improve texture loading, and other graphics options in your <code>Engine.ini</code> file.</p><br/>'
+                        + `<p>This tweak will change a handful of engine settings to improve texture loading, and other graphics options in your <code>${path.basename(config)}Engine.ini</code> file.</p><br/>`
                         + "<p>This tweak can also hurt your game's performance, especially the framerate.</p><br/>"
                         + `<p>This process will attempt to find and modify the configuration file at <code>${config}</code></p>`
             }, [

@@ -11,7 +11,7 @@ import ini = require('@nodecraft/ini');
  * @param configFile (optional) path to the configuration file to fix
  */
 export function applyTextureFix(configFile?: string): Promise<boolean> {
-    var configPath = configFile ?? getUserConfigPath();
+    var configPath = configFile ?? getUserConfigPath('Engine.ini');
     let changed = false;
     return fs.readFileAsync(configPath, {encoding: 'utf8'})
         .then((content: string) => {
@@ -36,12 +36,12 @@ export function applyTextureFix(configFile?: string): Promise<boolean> {
 }
 
 export function applyGraphicsTweak(configFile?: string): Promise<boolean> {
-    var configPath = configFile ?? getUserConfigPath();
+    var configPath = configFile ?? getUserConfigPath('Engine.ini');
     let changed = false;
     return fs.readFileAsync(configPath, {encoding: 'utf8'})
         .then((content: string) => {
             var config = ini.parse(content, {inlineArrays: true});
-            if (config["SystemSettings"] && config["SystemSettings"]["r.Streaming.FullyLoadUsedTextures"]) {
+            if (config["SystemSettings"] && config["SystemSettings"]["r.ViewDistanceScale"]) {
                 return Promise.resolve()
             } else {
                 return fs.copyAsync(configPath, configPath + '.orig')

@@ -3,7 +3,7 @@ import { fs, log, util, selectors } from "vortex-api";
 import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, IExtensionApi, IGameStoreEntry, IMod, IDeployedFile, ITestResult, IModTable } from 'vortex-api/lib/types/api';
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
-import { isGameManaged } from "./util";
+import { getUserConfigPath, isGameManaged } from "./util";
 import { GeneralSettings, settingsReducer, TweakSettings, Features } from "./settings";
 import { checkForConflicts, updateSlots, AircraftView } from "./slots";
 import { advancedInstall } from "./install";
@@ -92,7 +92,8 @@ function main(context: IExtensionContext) {
             SteamAPPId: STEAMAPP_ID.toString()
         },
         details: {
-            steamAppId: STEAMAPP_ID
+            steamAppId: STEAMAPP_ID,
+            settingsPath: () => getUserConfigPath()
         }
     });
 
