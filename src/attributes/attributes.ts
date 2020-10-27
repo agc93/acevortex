@@ -50,7 +50,10 @@ const specialAircraftNames = {
     "rflm": "Rafale M",
     "su30": "SU-30M2", //this is capitalised to match the fallback behaviour
     "typn": "Typhoon",
-    "zoef": "ADF-01"
+    "zoef": "ADF-01",
+    "fa44": "CFA-44",
+    "fa27": "XFA-27",
+    "asfx": "ASF-X"
 }
 
 export function getSlotName(slotIdent: string) {
