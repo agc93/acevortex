@@ -8,4 +8,4 @@ FileDescription: |-
 
   To manually install, extract the zip to %APPDATA%\Vortex\plugins\game-acecombat7skiesunknown.
 
-  Read about the changes in this release at ac7.vortex.support/updates/
+  Read about the changes in this release at ac7.vortex.support/updates/v{{Version}}
