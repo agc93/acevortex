@@ -1,4 +1,13 @@
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – AceVortex</title><link>/</link><description>Recent content on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 2.2 Release</title><link>/blog/2020/09/25/alpha-2.2-release/</link><pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/25/alpha-2.2-release/</guid><description>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>AceVortex – AceVortex</title><link>/</link><description>Recent content on AceVortex</description><generator>Hugo -- gohugo.io</generator><atom:link href="/index.xml" rel="self" type="application/rss+xml"/><item><title>Blog: Alpha 2.3 Release</title><link>/blog/2020/10/27/alpha-2.3-release/</link><pubDate>Tue, 27 Oct 2020 00:00:00 +0000</pubDate><guid>/blog/2020/10/27/alpha-2.3-release/</guid><description>
+&lt;div class="pageinfo pageinfo-primary">
+&lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
+&lt;/div>
+&lt;p>This release is a very minor fix update in preparation for the new DLC updates.&lt;/p>
+&lt;p>The new update adds three new planes and they&amp;rsquo;ve now been added to the skin detection so once you install some skins for the new CFA-44, XFA-27 and ASF-X, they&amp;rsquo;ll correctly show up in the mod details and Skins view.&lt;/p>
+&lt;blockquote>
+&lt;p>All of the automatic skin slot features are a) very new and potentially not 100% stable and b) not guaranteed to work. Depending on how the mod was packed, we might not be able to auto-detect the slot and you will have to keep track of those mods yourself.&lt;/p>
+&lt;/blockquote>
+&lt;p>As always, please report any issues you find &lt;a href="https://github.com/agc93/acevortex">on GitHub&lt;/a>. If things go really awry, you can also turn off the new installer in the Settings page and see if that resolves any issues you&amp;rsquo;re facing during installation&lt;/p></description></item><item><title>Blog: Alpha 2.2 Release</title><link>/blog/2020/09/25/alpha-2.2-release/</link><pubDate>Fri, 25 Sep 2020 00:00:00 +0000</pubDate><guid>/blog/2020/09/25/alpha-2.2-release/</guid><description>
 &lt;div class="pageinfo pageinfo-primary">
 &lt;p>This release is now available &lt;a href="https://www.nexusmods.com/site/mods/125?tab=files">on Nexus Mods&lt;/a>.&lt;/p>
 &lt;/div>
