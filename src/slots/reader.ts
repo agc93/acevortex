@@ -15,27 +15,32 @@ export class SlotReader {
         if (nfs.existsSync(filePath) && path.extname(filePath).toLowerCase() == MOD_FILE_EXT) {
             const fileBuffer = fs.readFileSync(filePath);
             var searchKey = 'Nimbus/Content/'
-            // log('debug', 'read pak file into buffer', {length: fileBuffer.length, path: filePath});
-            var key = fileBuffer.indexOf(Buffer.from(searchKey), this.getFileOffset(fileBuffer.length));
-            if (key && key != -1) /* I don't honestly know what this returns when its not found */ {
+            var getAllIndexes = (arr: Buffer) => {
+                var indexes = [], i = this.getFileOffset(fileBuffer.length);
+                while ((i = arr.indexOf(Buffer.from(searchKey), i+1)) != -1){
+                    indexes.push(i);
+                }
+                return indexes;
+            }
+            var indexes = getAllIndexes(fileBuffer);
+            log('debug', `identified ${indexes.length} object paths`);
+            for (const key of indexes) {
                 var rawString = fileBuffer.toString('utf8', key + 16, key + 64);
-                // log('debug', 'found key in pak file', {key, rawString}); //TODO: remove
                 // var pattern = new RegExp(/([a-z0-9]+?)_(v?\d+a?\w{1}?)_(\w).*/);
-                var pattern = new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Z]{1}|[A-Za-z]{4})(?:[^\w])(?!ue)/);
+                var pattern = new RegExp(/\/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Z]{1})(?:[^\w])(?!ue)/);
                 // var pattern = new RegExp(/\/([a-zA-Z0-9]{2,}?)_x?(\d*\w*)_([A-Z]{1}|[A-Za-z]{4})(?:[^\w])(?!ue)/); //this will not match weapons
                 if (pattern.test(rawString) && rawString.includes('Aircraft')) {
                     var matches = pattern.exec(rawString);
-                    // log('debug', 'key string matched pattern', {matches});
+                    log('debug', 'identified aircraft skin', {matches});
                     var [, aircraft, slot, skinType] = matches;
                     if (skinType.includes('MREC')) {
-                        return;
+                        continue;
                     }
                     return {aircraft, slot};
                 }
-            } else {
-                log('debug', 'failed to find skin key in mod file');
             }
         }
+        log('debug', 'failed to find skin key in mod file');
         return undefined;
     }
 
