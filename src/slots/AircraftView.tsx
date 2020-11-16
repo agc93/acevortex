@@ -2,7 +2,7 @@ import { IMod, IExtensionApi, IState, IProfile, IProfileMod } from "vortex-api/l
 import { ComponentEx, util, MainPage, FlexLayout, selectors, Icon, log } from "vortex-api";
 import { connect } from "react-redux";
 import { withTranslation } from "react-i18next";
-import { Panel, ListGroup, ListGroupItem, Button, Image, Checkbox, CheckboxProps } from "react-bootstrap";
+import { Panel, ListGroup, ListGroupItem, Button, Image, Checkbox, CheckboxProps, ButtonGroup, Well } from "react-bootstrap";
 import { getModName } from "vortex-ext-common";
 import React, { Component } from 'react';
 
@@ -108,26 +108,31 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                             </FlexLayout.Flex>
                                             <FlexLayout.Fixed>
                                                 {selectedAircraft &&
-                                                <FlexLayout type="row">
-                                                <Button
-                                                    id='av-more-mods'
-                                                    onClick={() => this.searchAircraft(false)}
-                                                    bsStyle='ghost'
-                                                    className='av-action-center'
-                                                    >
-                                                    {<Icon name='nexus'/>}
-                                                    {`Find ${selectedAircraft} skins on Nexus`}
-                                                </Button>
-                                                <Button
-                                                    id='av-more-mods-db'
-                                                    onClick={() => this.searchAircraftDB()}
-                                                    bsStyle='ghost'
-                                                    className='av-action-center'
-                                                    >
-                                                    {<Icon name='mods'/>}
-                                                    {`Find ${selectedAircraft} skins on ModDB`}
-                                                </Button>
-                                                </FlexLayout>
+                                                    <FlexLayout className='av-action-center' type="row">
+                                                        <Well>
+                                                            <span className='av-action-label'>Find {selectedAircraft} skins on:</span>
+                                                            <ButtonGroup>
+                                                                <Button
+                                                                    id='av-more-mods'
+                                                                    onClick={() => this.searchAircraft(false)}
+                                                                    bsStyle='ghost'
+                                                                    className='av-action-center'
+                                                                >
+                                                                    {<Icon name='nexus' />}
+                                                                    {`Nexus Mods`}
+                                                                </Button>
+                                                                <Button
+                                                                    id='av-more-mods-db'
+                                                                    onClick={() => this.searchAircraftDB()}
+                                                                    bsStyle='ghost'
+                                                                    className='av-action-center'
+                                                                >
+                                                                    {<Icon name='mods' />}
+                                                                    {`ModDB`}
+                                                                </Button>
+                                                            </ButtonGroup>
+                                                        </Well>
+                                                    </FlexLayout>
                                                 }
                                             </FlexLayout.Fixed>
                                         </FlexLayout>

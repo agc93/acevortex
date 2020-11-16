@@ -23,10 +23,10 @@
 .av-slotlist {
     @include vertical-list;
     max-width: 100%;
-    max-height: 100%;
 
     .list-group {
         overflow-y: auto;
+        max-height: 100%;
     }
 }
 
@@ -130,6 +130,13 @@
 }
 
 .av-action-center {
-    display: block;
+    display: block !important;
     margin: 0 auto;
+    > .well {
+        padding: 10px;
+        margin: 0px 10px 10px 0px;
+    }
+    .av-action-label {
+        margin-right: 1em;
+    }
 }
