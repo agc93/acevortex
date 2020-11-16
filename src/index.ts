@@ -7,7 +7,7 @@ import { getUserConfigPath, isGameManaged } from "./util";
 import { GeneralSettings, settingsReducer, TweakSettings, Features } from "./settings";
 import { checkForConflicts, updateSlots, AircraftView } from "./slots";
 import { advancedInstall } from "./install";
-import { tableAttributes, getSkinName, installedFilesRenderer } from "./attributes";
+import { tableAttributes, skinsAttribute, installedFilesRenderer } from "./attributes";
 
 export const GAME_ID = 'acecombat7skiesunknown'
 export const I18N_NAMESPACE = 'game-acecombat7skiesunknown';
@@ -115,11 +115,12 @@ function main(context: IExtensionContext) {
         condition: () => isActiveGame(context.api, GAME_ID),
         customRenderer: (mod: IMod) => installedFilesRenderer(context.api, mod)
     });
-    context.registerTableAttribute('mods', {
-        ...tableAttributes.skins,
-        calc: (mod: IMod) => getSkinName(mod),
-        condition: () => selectors.activeGameId(context.api.getState()) === GAME_ID,
-    });
+    // context.registerTableAttribute('mods', {
+    //     ...tableAttributes.skins,
+    //     calc: (mod: IMod) => getSkinName(mod),
+    //     condition: () => selectors.activeGameId(context.api.getState()) === GAME_ID,
+    // });
+    context.registerTableAttribute('mods', skinsAttribute(context.api));
 
     context.registerMainPage('aircraft', 'Skins', AircraftView, {
         group: 'per-game',

@@ -84,7 +84,7 @@ function removeNonConflicts(slots: SlotList) {
 
 export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boolean = true) {
     // log('debug', 'updating skin slots for mods', {mods: mods.length, replace});
-    var reader = new SlotReader();
+    var reader = new SlotReader((m, d) => log('debug', m, d), MOD_FILE_EXT);
     var installedMods = mods
         .filter(m => m !== undefined && m !== null && m)
         .filter(m => m.state == 'installed')
@@ -109,6 +109,7 @@ export async function updateSlots(api: IExtensionApi, mods: IMod[], replace: boo
                     return null;
                 })
                 .filter(fii => fii)
+                .flatMap(i => i)
                 .map(i => `${i.aircraft}|${i.slot}`);
             if (slots) {
                 api.store.dispatch(actions.setModAttribute(GAME_ID, mod.id, 'skinSlots', slots));

@@ -1,15 +1,14 @@
 import { ITableAttribute, IMod } from "vortex-api/lib/types/api";
-import { util } from "vortex-api";
 
 export const tableAttributes: {[name: string]: ITableAttribute} = {
     skins: {
         id: 'acev-skin',
-        placement: 'detail',
+        placement: 'both',
         name: 'Skin(s)',
         help: 'The skins included in this mod (if any).',
         edit: {},
         isToggleable: true,
-        isSortable: true
+        isSortable: false
     },
     installedPaks: {
         id: 'acev-paks',
@@ -76,11 +75,4 @@ export function getAircraftName(aircraftIdent: string): string {
         return firstNum;
     }
     
-}
-
-export function getSkinName (mod: IMod) {
-    return util.getSafe<string[]>(mod.attributes, ['skinSlots'], [])
-        .map(sl => sl.split('|'))
-        .map(segs => `${getAircraftName(segs[0])} (${getSlotName(segs[1])})`)
-        .join(', ');
 }

@@ -3,7 +3,7 @@ import { TFunction } from 'i18next';
 import { ComponentEx, tooltip, types, util, More } from 'vortex-api';
 import { IExtensionApi, IMod } from 'vortex-api/lib/types/api';
 import { I18N_NAMESPACE } from '..';
-const { Overlay, Popover } = require('react-bootstrap');
+import DetailOverlay from "./DetailOverlay";
 
 interface IInstalledProps {
     mod: types.IMod;
@@ -16,15 +16,6 @@ interface IComponentState {
 }
 
 class InstalledPaks extends ComponentEx<IInstalledProps, IComponentState> {
-    private mRef: Element;
-
-    constructor(props: IInstalledProps) {
-        super(props);
-
-        this.state = {
-            open: false,
-        };
-    }
 
     public render() {
         const { mod, t } = this.props;
@@ -32,57 +23,13 @@ class InstalledPaks extends ComponentEx<IInstalledProps, IComponentState> {
         var content: JSX.Element | JSX.Element[];
         var installedFiles = util.getSafe(mod.attributes, ['installedPaks'], []) as string[];
         var direction = this.props.direction ?? 'left';
-        if (installedFiles.length == 0) {
-            content = <div></div>
-        } else {
-            const popover = (
-                <Popover id='popover-acev-paks'>
-                    <div style={{ maxHeight: 700, overflowY: 'auto' }}>
-                        <p>
-                            <strong>Installed PAK files:</strong>
-                        </p>
-                        <ul>{installedFiles.map(p => <li>{p}</li>)}</ul>
-                    </div>
-                </Popover>
-            );
-            content = (
-                <div>
-                    <Overlay
-                        rootClose
-                        placement={direction}
-                        onHide={this.hide}
-                        show={this.state.open}
-                        target={this.getRef}
-                    >
-                        {popover}
-                    </Overlay>
-                    <a ref={this.setRef} onClick={this.toggle}>
-                        {t('{{count}} installed files', { count: installedFiles.length, ns: I18N_NAMESPACE })}
-                    </a>
-                </div>
-            );
-        }
-
-
-        return (
-            <div className='bs-attribute-icons'>
-                {content}
-            </div>
-        );
-    }
-
-    private getRef = () => this.mRef;
-
-    private setRef = (ref: Element) => {
-        this.mRef = ref;
-    }
-
-    private hide = () => {
-        this.setState({ open: false });
-    }
-
-    private toggle = () => {
-        this.setState({ open: !this.state.open });
+        return <DetailOverlay 
+            items={installedFiles} 
+            direction={this.props.direction} 
+            t={t}
+            title="Installed PAK Files">
+                <a>{t('{{count}} installed files', { count: installedFiles.length, ns: I18N_NAMESPACE })}</a>
+            </DetailOverlay>
     }
 }
 
