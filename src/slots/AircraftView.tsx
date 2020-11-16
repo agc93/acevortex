@@ -110,7 +110,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                                 {selectedAircraft &&
                                                 <Button
                                                     id='av-more-mods'
-                                                    onClick={this.searchAircraft}
+                                                    onClick={() => this.searchAircraft(false)}
                                                     bsStyle='ghost'
                                                     className='av-action-center'
                                                     >
@@ -133,9 +133,12 @@ class AircraftView extends ComponentEx<IProps, {}> {
         this.setState({includeNpc: (evt.target as any).checked} as IAircraftViewState);
     }
 
-    private searchAircraft = () => {
+    private searchAircraft = (includeDescription = false) => {
         const { selectedAircraft } = this.state;
-        util.opn(`https://www.nexusmods.com/acecombat7skiesunknown/search/?gsearch=${selectedAircraft}`);
+        var url = includeDescription
+            ? `https://www.nexusmods.com/search/?RH_ModList=nav:true,home:false,type:0,user_id:0,game_id:2777,advfilt:true,search_description:${selectedAircraft},include_adult:true,page_size:20,show_game_filter:false`
+            : `https://www.nexusmods.com/acecombat7skiesunknown/search/?gsearch=${selectedAircraft}`;
+        util.opn(url);
     }
 
     private renderSlots = (slots: {[slot:string]: IMod[]}) => {
@@ -218,7 +221,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
                         <div className='av-item-footer'>
                             <div className='av-item-footer-text'>{util.getSafe(mod.attributes, ['shortDescription'], '')}</div>
                         </div>
-                        <InstalledPaks direction='right' mod={mod} t={api.translate} />
+                        <InstalledPaks direction='left' mod={mod} t={api.translate} />
                         </FlexLayout.Flex>
                         <FlexLayout.Fixed>
                         <div className='av-item-actions'>
