@@ -108,6 +108,7 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                             </FlexLayout.Flex>
                                             <FlexLayout.Fixed>
                                                 {selectedAircraft &&
+                                                <FlexLayout type="row">
                                                 <Button
                                                     id='av-more-mods'
                                                     onClick={() => this.searchAircraft(false)}
@@ -115,8 +116,18 @@ class AircraftView extends ComponentEx<IProps, {}> {
                                                     className='av-action-center'
                                                     >
                                                     {<Icon name='nexus'/>}
-                                                    {`Find more ${selectedAircraft} skins`}
+                                                    {`Find ${selectedAircraft} skins on Nexus`}
                                                 </Button>
+                                                <Button
+                                                    id='av-more-mods-db'
+                                                    onClick={() => this.searchAircraftDB()}
+                                                    bsStyle='ghost'
+                                                    className='av-action-center'
+                                                    >
+                                                    {<Icon name='mods'/>}
+                                                    {`Find ${selectedAircraft} skins on ModDB`}
+                                                </Button>
+                                                </FlexLayout>
                                                 }
                                             </FlexLayout.Fixed>
                                         </FlexLayout>
@@ -138,6 +149,12 @@ class AircraftView extends ComponentEx<IProps, {}> {
         var url = includeDescription
             ? `https://www.nexusmods.com/search/?RH_ModList=nav:true,home:false,type:0,user_id:0,game_id:2777,advfilt:true,search_description:${selectedAircraft},include_adult:true,page_size:20,show_game_filter:false`
             : `https://www.nexusmods.com/acecombat7skiesunknown/search/?gsearch=${selectedAircraft}`;
+        util.opn(url);
+    }
+
+    private searchAircraftDB = () => {
+        const { selectedAircraft } = this.state;
+        var url = `https://www.moddb.com/games/ace-combat-7/addons?filter=t&kw=${selectedAircraft}&category=&licence=&timeframe=`
         util.opn(url);
     }
 

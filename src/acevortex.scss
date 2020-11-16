@@ -23,6 +23,7 @@
 .av-slotlist {
     @include vertical-list;
     max-width: 100%;
+    max-height: 100%;
 
     .list-group {
         overflow-y: auto;
