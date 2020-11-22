@@ -4,10 +4,12 @@ import { IExtensionContext, IDiscoveryResult, ProgressDelegate, IInstallResult, 
 import { UnrealGameHelper, ProfileClient, isActiveGame } from "vortex-ext-common";
 
 import { getUserConfigPath, isGameManaged } from "./util";
-import { GeneralSettings, settingsReducer, TweakSettings, Features } from "./settings";
+import { GeneralSettings, settingsReducer, TweakSettings, Features, BackupSettings, Settings } from "./settings";
 import { checkForConflicts, updateSlots, AircraftView } from "./slots";
+import { SaveGameManager, runCleanBackups, runSaveBackup } from "./saves";
 import { advancedInstall } from "./install";
 import { tableAttributes, skinsAttribute, installedFilesRenderer } from "./attributes";
+import { debug } from 'console';
 
 export const GAME_ID = 'acecombat7skiesunknown'
 export const I18N_NAMESPACE = 'game-acecombat7skiesunknown';
@@ -20,6 +22,8 @@ export type ModList = { [modId: string]: IMod; };
 const relModPath = path.join('Game', 'Content', 'Paks', '~mods');
 
 export type GroupedPaths = { [key: string]: string[] }
+
+export type RunningTools = {[key: string]: {exePath: string, started: any, pid: number, exclusive: boolean}};
 
 
 export function findGame() {
@@ -44,6 +48,7 @@ function main(context: IExtensionContext) {
 
     context.registerSettings('Interface', GeneralSettings, undefined, isAceCombatManaged, 101);
     context.registerSettings('Workarounds', TweakSettings, () => {t: context.api.translate}, isAceCombatManaged, 101);
+    context.registerSettings('Workarounds', BackupSettings, () => {t: context.api.translate}, () => isActiveGame(context.api, GAME_ID), 102);
     context.registerReducer(['settings', 'acevortex'], settingsReducer);
     context.once(() => {
         context.api.setStylesheet('av-common', path.join(__dirname, 'acevortex.scss'));
@@ -62,15 +67,25 @@ function main(context: IExtensionContext) {
             }
             return Promise.resolve();
         });
+        context.api.onAsync('did-deploy', (profileId: string, deployment: { [typeId: string]: IDeployedFile[] }): Promise<any> => {
+            if (isActiveGame(context.api, GAME_ID) && Features.saveBackupsEnabled(context.api.getState())) {
+                log('debug', 'running backup event handler');
+                runSaveBackup(context.api);
+            }
+            return Promise.resolve();
+        });
+        context.api.events.on('gamemode-activated', (gameId: string): void => {
+            var state = context.api.getState();
+            if (gameId && gameId == GAME_ID && Features.saveBackupsEnabled(state)) {
+                runCleanBackups(context.api);
+            }
+        });
+        context.api.onStateChange(['session', 'base', 'toolsRunning'], async (previous: RunningTools, current: RunningTools) => {
+            handleGameLaunch(context.api, previous, current);
+        });
         context.api.onStateChange(
             ['persistent', 'mods'],
             onModsChanged(context.api));
-        /* context.api.events.on('mods-enabled', (modIds: string[], enabled: boolean, gameMode: string) => {
-            if (isActiveGame(context.api, GAME_ID)) {
-                refreshSkins(modIds, false);
-            }
-            return Promise.resolve();
-        }); */
     });
     context.registerGame({
         name: "Ace Combat 7: Skies Unknown",
@@ -88,6 +103,7 @@ function main(context: IExtensionContext) {
             log('debug', 'running acevortex setup')
             unreal.prepareforModding(discovery, relModPath)
         },
+        requiresLauncher: getLauncher,
         environment: {
             SteamAPPId: STEAMAPP_ID.toString()
         },
@@ -131,6 +147,20 @@ function main(context: IExtensionContext) {
     });
 
     return true
+}
+
+async function getLauncher(gamePath: string): Promise<{ launcher: string, addInfo?: any }> {
+    return gamePath.includes('steamapps') ? {launcher: 'steam'} : undefined;
+}
+
+async function handleGameLaunch(api: IExtensionApi, previous: RunningTools, current: RunningTools): Promise<void> {
+    // if ("tool has been launched" && "tool is AC7")
+    if ((Object.keys(current) > Object.keys(previous)) && Object.keys(current).some(a => a == "ace7game.exe")) {
+        if (Features.saveBackupsEnabled(api.getState())) {
+            log('debug', 'detected game launch, running save backup');
+            runSaveBackup(api)
+        }
+    }
 }
 
 /**
