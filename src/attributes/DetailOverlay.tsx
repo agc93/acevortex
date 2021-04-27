@@ -2,7 +2,6 @@ import React from "react";
 import { Overlay, Popover } from "react-bootstrap";
 import { ComponentEx, tooltip } from "vortex-api";
 import { TFunction } from "vortex-api/lib/types/api";
-import { I18N_NAMESPACE } from "..";
 
 interface IDetailProps {
     items: string[];
@@ -34,7 +33,6 @@ class DetailOverlay extends ComponentEx<IDetailProps, IComponentState> {
         var direction = this.props.direction ?? 'left';
         if (items.length == 0) {
             return <div></div>
-            // content = <div></div>
         } else {
             const popover = (
                 <Popover id='popover-acev-paks'>

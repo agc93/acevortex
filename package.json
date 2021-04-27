@@ -33,7 +33,7 @@
     "axios": "^0.19.2",
     "bluebird": "^3.5.5",
     "copyfiles": "^2.3.0",
-    "electron": "8.5.4",
+    "electron": "11.2.2",
     "i18next": "^17.0.4",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
@@ -44,7 +44,7 @@
     "ts-loader": "^6.0.4",
     "typedoc": "^0.17.4",
     "typescript": "^3.5.2",
-    "vortex-api": "github:Nexus-Mods/vortex-api",
+    "vortex-api": "github:Nexus-Mods/vortex-api#e5e6410",
     "vortex-ext-common": "^0.0.8",
     "webpack": "^4.35.0",
     "webpack-cli": "^3.3.4"

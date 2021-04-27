@@ -52,7 +52,9 @@ const specialAircraftNames = {
     "zoef": "ADF-01",
     "fa44": "CFA-44",
     "fa27": "XFA-27",
-    "asfx": "ASF-X"
+    "asfx": "ASF-X",
+    "f15m": "F-15 S/MTD",
+    "f16x": "F-16XL"
 }
 
 export function getSlotName(slotIdent: string) {

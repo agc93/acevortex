@@ -6,7 +6,7 @@ description: >
   How to install, view and manage your mods in Vortex.
 ---
 
-At it's core, installing mods is roughly the same as any Vortex-enabled game, once you've added C&C Remastered as a managed game in Vortex.
+At it's core, installing mods is roughly the same as any Vortex-enabled game, once you've added Ace Combat 7 as a managed game in Vortex.
 
 If you haven't already, open the Games screen and click the **Manage** button on the Ace Combat 7: Skies Unknown icon under *Unmanaged*
 
@@ -18,11 +18,13 @@ If you're installing mods from Nexus Mods, you can use the "Vortex" or "Download
 
 ### Installing archives with multiple mod files
 
-If you install a file from Nexus Mods that has multiple game mod files (i.e. `.pak` files), you will see a prompt that should walk you through the process of choosing which mod files you want to install. Remember that since Vortex doesn't actually read your game files, it won't be able to detect skin slot conflicts automatically.
+If you install a file from Nexus Mods that has multiple game mod files (i.e. `.pak` files), you will see a prompt that should walk you through the process of choosing which mod files you want to install. 
 
 ### Managing your skin slots
 
 If you install a lot of skin mods, you will likely run into problems where you have multiple mods that replace the same skin slot. Since 0.1.0, AceVortex will attempt to read which slot a skin replaces when you install a mod. If you install multiple mods that replace the same aircraft skin, you'll get a warning when you deploy. At any time, you can also check which skins a mod includes by double-clicking the mod in the Mods list and checking the details in the panel on the right.
+
+> You can also use the gear icon at the top right of the Mods screen to enable the *Skin(s)* column and quickly check your installed skins, right from the Mods list
 
 ## Install from archives
 

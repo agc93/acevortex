@@ -1,5 +1,5 @@
-import * as nfs from 'fs';
-import * as path from 'path';
+import * as nfs from "fs";
+import * as path from "path";
 
 export class SlotReader {
     private _logFn: (msg: string, obj?: any) => void;
@@ -65,24 +65,34 @@ export class SlotReader {
                 }
             }
         }
-        this._logFn('failed to find skin key in mod file');
-        return skins;
+        if (skins.length == 0) {
+            this._logFn('failed to find skin key in mod file');
+            return []
+        }
+        function onlyUnique(value: {aircraft: string, slot: string, skinType: string}, index: number, self: {aircraft: string, slot: string, skinType: string}[]) {
+            return self.findIndex(v => v.aircraft == value.aircraft && v.slot == value.slot) === index;
+        }
+        return skins.filter(onlyUnique);
     }
 
     private parseMatchString(rawString: string, useUbulk = false): {aircraft: string, slot: string}[] {
         var results = [];
         var pattern = useUbulk 
-            ? new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Z]{1})(?:[^\w])(?=ub)/g)
-            : new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Z]{1})(?:[^\w])(?=ue)/g);
+            ? new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Za-z]{1})(?:[^\w])(?=ub)/g)
+            : new RegExp(/([a-zA-Z0-9]+?)_x?(\d*\w*)_([A-Za-z]{1}|[A-Za-z]{4})(?:[^\w])(?=ue)/g);
         var matches;
         while ( (matches = pattern.exec(rawString)) !== null && rawString.includes('Aircraft')){
             this._logFn('identified aircraft skin', {matches});
             var [, aircraft, slot, skinType] = matches;
-            if (skinType == 'D') {
-                results.push({aircraft, slot});
+            if (skinType) {
+                results.push({aircraft, slot, skinType: skinType.charAt(0).toUpperCase() + skinType.substr(1)});
             }
         }
-        return results;
+        if (results.filter(r => r.skinType == "D").length > 0) {
+            return results.filter(r => r.skinType == "D").map(r => ({aircraft: r.aircraft, slot: r.slot}));
+        } else {
+            return results.filter(r => r.skinType == "Inst").map(r => ({aircraft: r.aircraft, slot: r.slot}));
+        }
+        // return results;
     }
-
 }

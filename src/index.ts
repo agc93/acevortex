@@ -9,7 +9,6 @@ import { checkForConflicts, updateSlots, AircraftView } from "./slots";
 import { SaveGameManager, runCleanBackups, runSaveBackup } from "./saves";
 import { advancedInstall } from "./install";
 import { tableAttributes, skinsAttribute, installedFilesRenderer } from "./attributes";
-import { debug } from 'console';
 
 export const GAME_ID = 'acecombat7skiesunknown'
 export const I18N_NAMESPACE = 'game-acecombat7skiesunknown';
