@@ -47,7 +47,7 @@
     "vortex-api": "github:Nexus-Mods/vortex-api#e5e6410",
     "vortex-ext-common": "^0.0.8",
     "webpack": "^4.35.0",
-    "webpack-cli": "^3.3.4"
+    "webpack-cli": "^3.3.12"
   },
   "dependencies": {}
 }
